@@ -1,6 +1,26 @@
-<div>
-    {{budjot.name}}
+<div class="container">
+    <div class="row">
+        <div class="col-md">
+            <h2>{{budjot.name}}</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>Name</td>
+                        <td>Amount</td>
+                        <td>Paid?</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let budjotEntry of budjot.entries">
+                        <td>{{budjotEntry.name}}</td>
+                        <td>£{{budjotEntry.amount}}</td>
+                        <td>{{budjotEntry.paid}}</td>
+                        <td><button class="btn btn-success">Edit</button></td>
+                        <td><button class="btn btn-danger">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<li *ngFor="let budjotEntry of budjot.entries">
-    {{budjotEntry.name}} | £{{budjotEntry.amount}} | {{budjotEntry.paid}}
-</li>
