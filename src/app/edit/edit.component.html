@@ -1,0 +1,6 @@
+<div>
+    {{budjot.name}}
+</div>
+<li *ngFor="let budjotEntry of budjot.entries">
+    {{budjotEntry.name}} | £{{budjotEntry.amount}} | {{budjotEntry.paid}}
+</li>
