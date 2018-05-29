@@ -13,11 +13,16 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let budjotEntry of budjot.entries">
-                        <td>{{budjotEntry.name}}</td>
-                        <td>£{{budjotEntry.amount}}</td>
-                        <td>{{budjotEntry.paid}}</td>
-                        <td><button class="btn btn-success">Edit</button></td>
-                        <td><button class="btn btn-danger">Delete</button></td>
+                        <td><input type="text" value="{{budjotEntry.name}}"></td>
+                        <td><input type="number" value="{{budjotEntry.amount}}"></td>
+                        <td><input type="checkbox" value="{{budjotEntry.paid}}"></td>
+                        <td><button class="btn btn-danger">X</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" value="{{newEntry.name}}"></td>
+                        <td><input type="number" value="{{newEntry.amount}}"></td>
+                        <td><input type="checkbox" value="{{newEntry.paid}}"></td>
+                        <td><button (click)="add()" class="btn btn-success">Add</button></td>
                     </tr>
                 </tbody>
             </table>

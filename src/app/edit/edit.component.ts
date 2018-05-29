@@ -9,6 +9,7 @@ import { BudjotEntry } from '../budjotentry';
 })
 export class EditComponent implements OnInit {
     budjot: Budjot;
+    newEntry: BudjotEntry;
 
     constructor() {
         this.budjot = new Budjot(
@@ -17,6 +18,12 @@ export class EditComponent implements OnInit {
                 new BudjotEntry("Bills", 3.1415, false)
             ]
         );
+        this.newEntry = new BudjotEntry(null, null, null);
+    }
+
+    add() {
+        this.budjot.entries.push(this.newEntry);
+        this.newEntry = new BudjotEntry(null, null, null);
     }
 
     ngOnInit() {}
