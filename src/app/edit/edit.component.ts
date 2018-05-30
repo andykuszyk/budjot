@@ -15,14 +15,14 @@ export class EditComponent implements OnInit {
         this.budjot = new Budjot(
             "Test Budjot",
             [
-                new BudjotEntry("Bills", 3.1415, false)
+                new BudjotEntry("Bills", 3.1415, true)
             ]
         );
         this.newEntry = new BudjotEntry(null, null, null);
     }
 
     add() {
-        this.budjot.entries.push(this.newEntry));
+        this.budjot.entries.push(this.newEntry);
         this.newEntry = new BudjotEntry(null, null, null);
     }
 
