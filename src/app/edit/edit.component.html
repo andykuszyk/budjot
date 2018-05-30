@@ -1,31 +1,24 @@
 <div class="container">
     <div class="row">
-        <div class="col-md">
+        <div class="col">
             <h2>{{budjot.name}}</h2>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <td>Name</td>
-                        <td>Amount</td>
-                        <td>Paid?</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let budjotEntry of budjot.entries">
-                        <td><input type="text" value="{{budjotEntry.name}}"></td>
-                        <td><input type="number" value="{{budjotEntry.amount}}"></td>
-                        <td><input type="checkbox" value="{{budjotEntry.paid}}"></td>
-                        <td><button class="btn btn-danger">X</button></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" value="{{newEntry.name}}"></td>
-                        <td><input type="number" value="{{newEntry.amount}}"></td>
-                        <td><input type="checkbox" value="{{newEntry.paid}}"></td>
-                        <td><button (click)="add()" class="btn btn-success">Add</button></td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md">Name</div>
+        <div class="col-md">Amount</div>
+        <div class="col-md">Paid</div>
+    </div>
+    <div class="row" *ngFor="let budjotEntry of budjot.entries">
+        <div class="col-md"><input type="text" class="form-control" value="{{budjotEntry.name}}"></div>
+        <div class="col-md"><input type="number" class="form-control" value="{{budjotEntry.amount}}"></div>
+        <div class="col-md"><input type="checkbox" class="form-control" value="{{budjotEntry.paid}}"></div>
+        <div class="col-md"><button class="btn btn-danger">X</button></div>
+    </div>
+    <div class="row">
+        <div class="col-md"><input type="text" class="form-control" value="{{newEntry.name}}"></div>
+        <div class="col-md"><input type="number" class="form-control" value="{{newEntry.amount}}"></div>
+        <div class="col-md"><input type="checkbox" class="form-control" value="{{newEntry.paid}}"></div>
+        <div class="col-md"><button (click)="add()" class="btn btn-success">Add</button></div>
     </div>
 </div>
