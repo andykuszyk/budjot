@@ -22,7 +22,7 @@ export class EditComponent implements OnInit {
     }
 
     add() {
-        this.budjot.entries.push(this.newEntry);
+        this.budjot.entries.push(this.newEntry));
         this.newEntry = new BudjotEntry(null, null, null);
     }
 
