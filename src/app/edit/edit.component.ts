@@ -26,6 +26,10 @@ export class EditComponent implements OnInit {
         this.newEntry = new BudjotEntry(null, null, null);
     }
 
+    delete(index: number) {
+       this.budjot.entries.splice(index, 1); 
+    }
+
     ngOnInit() {}
 
 }

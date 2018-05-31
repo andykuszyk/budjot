@@ -9,11 +9,11 @@
         <div class="col-md">Amount</div>
         <div class="col-md">Paid</div>
     </div>
-    <div class="row" *ngFor="let budjotEntry of budjot.entries">
+    <div class="row" *ngFor="let budjotEntry of budjot.entries; index as i">
         <div class="col-md"><input type="text" class="form-control" [(ngModel)]="budjotEntry.name"></div>
         <div class="col-md"><input type="number" class="form-control" [(ngModel)]="budjotEntry.amount"></div>
         <div class="col-md"><input type="checkbox" class="form-control" [(ngModel)]="budjotEntry.paid"></div>
-        <div class="col-md"><button class="btn btn-danger">X</button></div>
+        <div class="col-md"><button class="btn btn-danger" (click)="delete(i)">X</button></div>
     </div>
     <div class="row">
         <div class="col-md"><input type="text" class="form-control" [(ngModel)]="newEntry.name"></div>
