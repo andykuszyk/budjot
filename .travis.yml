@@ -1,0 +1,13 @@
+language: node_js
+
+branches:
+    only:
+        - master
+
+before_script:
+    - npm install -g @angular/cli
+    - docker login -u $dockerhubuser -p $dockerhubpassword docker.io
+
+script:
+    - ng build
+    - ./dockerbuild.sh
