@@ -11,5 +11,6 @@ script:
 - ng build
 - "./dockerbuild.sh"
 before_install:
+- mkdir ~/.ssh
 - openssl aes-256-cbc -K $encrypted_59a64ada46b3_key -iv $encrypted_59a64ada46b3_iv
   -in id_rsa.enc -out ~\/.ssh/id_rsa -d
