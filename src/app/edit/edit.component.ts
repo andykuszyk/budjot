@@ -26,6 +26,10 @@ export class EditComponent implements OnInit {
        this.budjot.removeEntry(index); 
     }
 
+    save() {
+        // todo
+    }
+
     ngOnInit() {}
 
 }
