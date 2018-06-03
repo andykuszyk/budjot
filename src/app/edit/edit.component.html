@@ -10,7 +10,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="income">Income</span>
                 </div>
-                <input type="number" class="form-control" aria-describedby="income">
+                <input type="number" class="form-control" aria-describedby="income" [(ngModel)]="budjot.income">
             </div>
         </div>
         <div class="col-sm">
@@ -18,7 +18,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="expenditure">Expenditure</span>
                 </div>
-                <input type="number" class="form-control" aria-describedby="expenditure" readonly>
+                <input type="number" class="form-control" aria-describedby="expenditure" readonly [(ngModel)]="budjot.expenditure">
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="paid">Paid</span>
                 </div>
-                <input type="number" class="form-control" aria-describedby="paid" readonly>
+                <input type="number" class="form-control" aria-describedby="paid" readonly [(ngModel)]="budjot.paid">
             </div>
         </div>
         <div class="col-sm">
@@ -36,7 +36,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="remaining">Remaining</span>
                 </div>
-                <input type="number" class="form-control" aria-describedby="remaining" readonly>
+                <input type="number" class="form-control" aria-describedby="remaining" readonly [(ngModel)]="budjot.remaining">
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="credit">Credit</span>
                 </div>
-                <input type="number" class="form-control" aria-describedby="credit" readonly>
+                <input type="number" class="form-control" aria-describedby="credit" readonly [(ngModel)]="budjot.credit">
             </div>
         </div>
     </div>

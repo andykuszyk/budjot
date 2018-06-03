@@ -12,22 +12,18 @@ export class EditComponent implements OnInit {
     newEntry: BudjotEntry;
 
     constructor() {
-        this.budjot = new Budjot(
-            "Test Budjot",
-            [
-                new BudjotEntry("Bills", 3.1415, true)
-            ]
-        );
-        this.newEntry = new BudjotEntry(null, null, null);
+        this.budjot = new Budjot("Test Budjot", 1000);
+        this.budjot.addEntry(new BudjotEntry("Bills", 3.1415, true, () => this.budjot.updateFields()));
+        this.newEntry = new BudjotEntry(null, null, null, () => this.budjot.updateFields());
     }
 
     add() {
-        this.budjot.entries.push(this.newEntry);
-        this.newEntry = new BudjotEntry(null, null, null);
+        this.budjot.addEntry(this.newEntry);
+        this.newEntry = new BudjotEntry(null, null, null, () => this.budjot.updateFields());
     }
 
     delete(index: number) {
-       this.budjot.entries.splice(index, 1); 
+       this.budjot.removeEntry(index); 
     }
 
     ngOnInit() {}
