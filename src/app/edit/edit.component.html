@@ -4,21 +4,23 @@
             <h2>{{budjot.name}}</h2>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md">Name</div>
-        <div class="col-md">Amount</div>
-        <div class="col-md">Paid</div>
+    <div class="row no-gutters">
+        <div class="col">Name</div>
+        <div class="col align-items-start">Amount</div>
+        <div class="col-1" style="text-align:center">Paid</div>
+        <div class="col-1"></div>
     </div>
-    <div class="row" *ngFor="let budjotEntry of budjot.entries; index as i">
-        <div class="col-md"><input type="text" class="form-control" [(ngModel)]="budjotEntry.name"></div>
-        <div class="col-md"><input type="number" class="form-control" [(ngModel)]="budjotEntry.amount"></div>
-        <div class="col-md"><input type="checkbox" class="form-control" [(ngModel)]="budjotEntry.paid"></div>
-        <div class="col-md"><button class="btn btn-danger" (click)="delete(i)">X</button></div>
+    <div class="row no-gutters" *ngFor="let budjotEntry of budjot.entries; index as i">
+        <div class="col"><input type="text" class="form-control" [(ngModel)]="budjotEntry.name"></div>
+        <div class="col"><input type="number" class="form-control" [(ngModel)]="budjotEntry.amount"></div>
+        <div class="col-1"><input type="checkbox" class="form-control" [(ngModel)]="budjotEntry.paid"></div>
+        <div class="col-1"><button class="btn btn-danger btn-sm" (click)="delete(i)">-</button></div>
     </div>
-    <div class="row">
-        <div class="col-md"><input type="text" class="form-control" [(ngModel)]="newEntry.name"></div>
-        <div class="col-md"><input type="number" class="form-control" [(ngModel)]="newEntry.amount"></div>
-        <div class="col-md"><input type="checkbox" class="form-control" [(ngModel)]="newEntry.paid"></div>
-        <div class="col-md"><button (click)="add()" class="btn btn-success">Add</button></div>
+    <hr>
+    <div class="row no-gutters">
+        <div class="col"><input type="text" class="form-control" [(ngModel)]="newEntry.name"></div>
+        <div class="col"><input type="number" class="form-control" [(ngModel)]="newEntry.amount"></div>
+        <div class="col-1"><input type="checkbox" class="form-control" [(ngModel)]="newEntry.paid"></div>
+        <div class="col-1"><button (click)="add()" class="btn btn-success btn-sm">+</button></div>
     </div>
 </div>
