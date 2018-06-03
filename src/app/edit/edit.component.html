@@ -1,13 +1,23 @@
 <div class="container">
     <div class="row">
+        <div class="col" style="text-align:center">
+            <h2><u>{{budjot.name}}</u></h2>
+        </div>
+    </div>
+    <div class="row">
         <div class="col">
-            <h2>{{budjot.name}}</h2>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="income">Income</span>
+                </div>
+                <input type="number" class="form-control" aria-describedby="income">
+            </div>
         </div>
     </div>
     <div class="row no-gutters">
-        <div class="col">Name</div>
-        <div class="col align-items-start">Amount</div>
-        <div class="col-1" style="text-align:center">Paid</div>
+        <div class="col"><b>Name</b></div>
+        <div class="col align-items-start"><b>Amount</b></div>
+        <div class="col-1" style="text-align:center"><b>Paid?</b></div>
         <div class="col-1"></div>
     </div>
     <div class="row no-gutters" *ngFor="let budjotEntry of budjot.entries; index as i">

@@ -1,11 +1,18 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>Welcome to Bud<i>jot</i>!</h1>
-</div>
-<router-outlet></router-outlet>
-<div style="text-align:center">
-    <nav>
-        | <a routerLink="/">Home</a> | <a routerLink="/login">Login</a> | <a routerLink="/edit">Edit</a> |
-    </nav>
+<div class="container">
+    <div class="row">
+        <div class="col" style="text-align:left"><h1 class="display-1"><b>Bud</b><i>jot</i>.com</h1></div>
+        <div class="col" style="text-align:right">A simple budgetting tool to help you jot down your finances.</div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col"><router-outlet></router-outlet></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col" style="text-align:center">
+            <nav>| <a routerLink="/">Home</a> | <a routerLink="/login">Login</a> | <a routerLink="/edit">Edit</a> |</nav>
+        </div>
+    </div>
 </div>
 
