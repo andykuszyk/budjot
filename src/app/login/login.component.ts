@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
 
 @Component({
   selector: 'app-login',
@@ -6,16 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-    constructor() { }
+    constructor(private authService: AuthService) { }
 
-    onSignIn(googleUser: any) {
-        var profile = googleUser.getBasicProfile();
-        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.   
+    signInWithGoogle(): void {
+        this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
     }
 
-    ngOnInit() {}
+    signOut(): void {
+        this.authService.signOut();
+    }
+
+    ngOnInit() {
+        this.authService.authState.subscribe((user) => { console.log(user) });
+    }
 
 }
