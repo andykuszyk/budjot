@@ -32,5 +32,8 @@ app.get('/users', (req, res) => {
 })
 
 app.use(express.static('dist/budjot'))
+app.use('/login', express.static('dist/budjot'))
+app.use('/edit', express.static('dist/budjot'))
+app.use('/list', express.static('dist/budjot'))
 
 app.listen(8080, () => console.log('Budjot running on port 8080'))
