@@ -12,8 +12,8 @@ import { Injectable } from '@angular/core';
 export class LoginComponent implements OnInit {
     constructor(private authService: AuthService, private http: HttpClient) { }
 
-    user: any;
-    
+    isLoggedIn: boolean;
+
     signInWithGoogle(): void {
         this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
     }
@@ -22,11 +22,14 @@ export class LoginComponent implements OnInit {
         this.authService.signOut();
     }
 
-    onSignIn() {
-        if (this.user == null) {
+    onSignIn(user: any) {
+        if (user == null) {
+            this.isLoggedIn = false;
             return;
+        } else {
+            this.isLoggedIn = true;
         }
-        var idToken = this.user.idToken;
+        var idToken = user.idToken;
         console.log(idToken);
         
         var httpOptions = {
@@ -35,16 +38,15 @@ export class LoginComponent implements OnInit {
                 'Authorization': idToken
             })
         };
-
-        var response = this.http.post('http://localhost:8080/users', { 'foo': 'bar' }, httpOptions);
-        console.log(response);
+        this.http.post(window.location.protocol + '//' + window.location.host + '/users', { 'foo': 'bar' }, httpOptions).subscribe(res => {
+            console.log(res);
+        });
     }
 
     ngOnInit() {
         this.authService.authState.subscribe((user) => { 
             console.log(user);
-            //this.user = user;
-            //this.onSignIn();
+            this.onSignIn(user);
         });
     }
 
