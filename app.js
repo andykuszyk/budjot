@@ -1,5 +1,7 @@
 const express = require('express')
 const app = express()
+const mongoose = require('mongoose')
+mongoose.connect
 
 if(process.argv.length < 3) {
     port = 8080
@@ -31,7 +33,7 @@ app.put('/jots/{id}', (req, res) => {
 
 app.post('/users', (req, res) => {
     // creates a new user if one doesn't already exist for the auth header
-    console.log(req)
+    console.log('Auth header: ' + req.get('Authorization'))
     res.send({ "spam": "eggs" })
 })
 
