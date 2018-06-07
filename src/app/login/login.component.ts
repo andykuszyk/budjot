@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     }
 
     onSignIn(user: any) {
+        if(user == null) { return; }
         var idToken = user.idToken;
         
         var url = window.location.protocol + '//' + window.location.host + '/users';

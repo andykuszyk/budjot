@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const config = require('./config');
+const google = require('./google');
+const mongo = require('./mongo');
 
 app.get('/jots', (req, res) => {
     // get the list of jots for the user in the auth header
@@ -25,16 +27,32 @@ app.put('/jots/{id}', (req, res) => {
 app.post('/users', (req, res) => {
     // creates a new user if one doesn't already exist for the auth header
     var idToken = req.get('Authorization');
-    var user = User.findOne({ id: idToken });
-    if(user == null) {
-        console.log('No user found for idToken, so creating a new one');
-        var user = new User({ id: idToken, created: Date.now(), lastLogin: Date.now() });
-        user.save();
-        res.status(201).send();
+    var id = google.verify(idToken);
+    if(id == null) {
+        res.status(401).send();
     } else {
-        user.lastLogin = Date.now();
-        user.save();
-        res.status(204).send()
+        var user = null;
+        mongo.user().findOne({ id: id }, function (err, u) { user = u });
+        if(user == null) {
+            console.log('No user found for idToken, so creating a new one');
+            var user = new mongo.user()({ id: id, created: Date.now(), lastLogin: Date.now() });
+            user.save(function (err, u) {
+                if(err) {
+                    res.status(500).send(err);
+                } else {
+                    res.status(201).send();
+                }
+            });
+        } else {
+            user.lastLogin = Date.now();
+            user.save(function (err, u) {
+                if(err) {
+                    res.status(500).send(err);
+                } else {
+                    res.status(204).send();
+                }
+            });
+        }
     }
 })
 
