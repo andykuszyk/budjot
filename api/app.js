@@ -1,22 +1,6 @@
-const express = require('express')
-const app = express()
-const mongoose = require('mongoose')
-
-if(process.argv.length < 5) {
-    console.log('Arguments required, usage is: node app.js [port] [mongo-user] [mongo-password]')
-    process.exit(-1)
-}
-
-var port = process.argv[2]
-var mongoUser = process.argv[3]
-var mongoPassword = process.argv[4]
-mongoose.connect(`mongodb://${mongoUser}:${mongoPassword}@ds247410.mlab.com:47410/budjot`)
-var userSchema = new mongoose.Schema({
-    id: { type: 'string', index: true },
-    created: 'date',
-    lastLogin: 'date'
-})
-var User = mongoose.model('user', userSchema)
+const express = require('express');
+const app = express();
+const config = require('./config');
 
 app.get('/jots', (req, res) => {
     // get the list of jots for the user in the auth header
@@ -54,8 +38,8 @@ app.post('/users', (req, res) => {
     }
 })
 
-app.use(express.static('dist/budjot'))
-app.use('/login', express.static('dist/budjot'))
-app.use('/edit', express.static('dist/budjot'))
-app.use('/list', express.static('dist/budjot'))
-app.listen(port, () => console.log('Budjot running on port ' + port))
+app.use(express.static('dist/budjot'));
+app.use('/login', express.static('dist/budjot'));
+app.use('/edit', express.static('dist/budjot'));
+app.use('/list', express.static('dist/budjot'));
+app.listen(config.port(), () => console.log('Budjot running on port ' + config.port()));
