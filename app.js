@@ -1,15 +1,22 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
-mongoose.connect
 
-if(process.argv.length < 3) {
-    port = 8080
-    console.log('No port provided, so using default port of 8080')
-} else {
-    port = process.argv[2]
-    console.log('Port provided, so serving on port ' + port)
+if(process.argv.length < 5) {
+    console.log('Arguments required, usage is: node app.js [port] [mongo-user] [mongo-password]')
+    process.exit(-1)
 }
+
+var port = process.argv[2]
+var mongoUser = process.argv[3]
+var mongoPassword = process.argv[4]
+mongoose.connect(`mongodb://${mongoUser}:${mongoPassword}@ds247410.mlab.com:47410/budjot`)
+var userSchema = new mongoose.Schema({
+    id: 'string',
+    created: 'date',
+    lastLogin: 'date'
+})
+var User = mongoose.model('user', userSchema)
 
 app.get('/jots', (req, res) => {
     // get the list of jots for the user in the auth header
@@ -34,7 +41,9 @@ app.put('/jots/{id}', (req, res) => {
 app.post('/users', (req, res) => {
     // creates a new user if one doesn't already exist for the auth header
     console.log('Auth header: ' + req.get('Authorization'))
-    res.send({ "spam": "eggs" })
+    var user = new User({ id: req.get('Authorization'), created: date.now, lastLogin: date.now })
+    user.save()
+    res.status(201).send({ "spam": "eggs" })
 })
 
 app.get('/users', (req, res) => {
