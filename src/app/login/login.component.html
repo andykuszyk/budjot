@@ -1,2 +1,11 @@
-<button class="btn btn-primary" (click)="signInWithGoogle()">Sign In</button>
-<button class="btn btn-secondary" (click)="signOut()">Sign Out</button>
+<div class="container">
+    <div class="row">
+        <div class="col"><button class="btn btn-primary" (click)="signInWithGoogle()">Sign In</button></div>
+        <div class="col"><button class="btn btn-secondary" (click)="signOut()">Sign Out</button></div>
+    </div>
+    <div class="row">
+        IsLoggedIn: {{isLoggedIn}
+        <br>
+        AccountCreated: {{accountCreated}}
+    </div>
+</div>

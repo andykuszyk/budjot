@@ -12,7 +12,7 @@ var mongoUser = process.argv[3]
 var mongoPassword = process.argv[4]
 mongoose.connect(`mongodb://${mongoUser}:${mongoPassword}@ds247410.mlab.com:47410/budjot`)
 var userSchema = new mongoose.Schema({
-    id: 'string',
+    id: { type: 'string', index: true },
     created: 'date',
     lastLogin: 'date'
 })
@@ -40,20 +40,22 @@ app.put('/jots/{id}', (req, res) => {
 
 app.post('/users', (req, res) => {
     // creates a new user if one doesn't already exist for the auth header
-    console.log('Auth header: ' + req.get('Authorization'))
-    var user = new User({ id: req.get('Authorization'), created: date.now, lastLogin: date.now })
-    user.save()
-    res.status(201).send({ "spam": "eggs" })
-})
-
-app.get('/users', (req, res) => {
-    // gets the status of the user for the auth header
-    console.log(req)
+    var idToken = req.get('Authorization');
+    var user = User.findOne({ id: idToken });
+    if(user == null) {
+        console.log('No user found for idToken, so creating a new one');
+        var user = new User({ id: idToken, created: Date.now(), lastLogin: Date.now() });
+        user.save();
+        res.status(201).send();
+    } else {
+        user.lastLogin = Date.now();
+        user.save();
+        res.status(204).send()
+    }
 })
 
 app.use(express.static('dist/budjot'))
 app.use('/login', express.static('dist/budjot'))
 app.use('/edit', express.static('dist/budjot'))
 app.use('/list', express.static('dist/budjot'))
-
 app.listen(port, () => console.log('Budjot running on port ' + port))
