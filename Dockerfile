@@ -1,7 +1,9 @@
 FROM node:8.11.2-jessie
-COPY ./dist/budjot/* app/
+COPY ./dist/budjot/* app/dist/budjot
+COPY ./api/* app/api
+COPY ./package.json app/
 WORKDIR app
-RUN npm install http-server -g
+RUN npm install
 EXPOSE 8080
-CMD http-server ./
+CMD node ./api/app.js 8080 mongoUser mongoPassword
 
