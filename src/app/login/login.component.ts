@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
         var url = window.location.protocol + '//' + window.location.host + '/users';
 
         this.http.post(url, null, { headers: new HttpHeaders({'Content-Type': 'application/json','Authorization': idToken}), observe: 'response'}).subscribe(res => {
+            console.log(res.status);
             if(res.status == 201) {
                 this.accountCreated = true;
                 this.isLoggedIn = true;

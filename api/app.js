@@ -24,35 +24,35 @@ app.put('/jots/{id}', (req, res) => {
     console.log(req)
 })
 
-app.post('/users', (req, res) => {
+app.post('/users', async (req, res) => {
     // creates a new user if one doesn't already exist for the auth header
     var idToken = req.get('Authorization');
-    var id = google.verify(idToken);
+    var id = await google.verify(idToken);
     if(id == null) {
         res.status(401).send();
     } else {
-        var user = null;
-        mongo.user().findOne({ id: id }, function (err, u) { user = u });
-        if(user == null) {
-            console.log('No user found for idToken, so creating a new one');
-            var user = new mongo.user()({ id: id, created: Date.now(), lastLogin: Date.now() });
-            user.save(function (err, u) {
-                if(err) {
-                    res.status(500).send(err);
-                } else {
-                    res.status(201).send();
-                }
-            });
-        } else {
-            user.lastLogin = Date.now();
-            user.save(function (err, u) {
-                if(err) {
-                    res.status(500).send(err);
-                } else {
-                    res.status(204).send();
-                }
-            });
-        }
+        mongo.user().findOne({ id: id }, function (err, user) {
+            if(user == null) {
+                console.log('No user found for idToken, so creating a new one');
+                var user = new mongo.user()({ id: id, created: Date.now(), lastLogin: Date.now() });
+                user.save(function (err, u) {
+                    if(err) {
+                        res.status(500).send(err);
+                    } else {
+                        res.status(201).send();
+                    }
+                });
+            } else {
+                user.lastLogin = Date.now();
+                user.save(function (err, u) {
+                    if(err) {
+                        res.status(500).send(err);
+                    } else {
+                        res.status(204).send();
+                    }
+                });
+            }
+        });
     }
 })
 
