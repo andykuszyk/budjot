@@ -1,11 +1,10 @@
 <div class="container">
-    <div class="row">
-        <div class="col"><button class="btn btn-primary" (click)="signInWithGoogle()">Sign In</button></div>
+    <div class="row" *ngIf="isLoggedIn">
+        <h3>Welcome back {{name}}!</h3>
+        <br>
         <div class="col"><button class="btn btn-secondary" (click)="signOut()">Sign Out</button></div>
     </div>
-    <div class="row">
-        IsLoggedIn: {{isLoggedIn}
-        <br>
-        AccountCreated: {{accountCreated}}
+    <div class="row" *ngIf="!isLoggedIn">
+        <button class="btn btn-primary" (click)="signInWithGoogle()">Sign In</button>
     </div>
 </div>
