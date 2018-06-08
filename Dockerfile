@@ -1,5 +1,5 @@
 FROM node:8.11.2-jessie
-COPY ./dist/budjot/* app/dist/budjot
+COPY ./dist/budjot/* app/dist/budjot/
 COPY ./api/* app/api
 COPY ./package.json app/
 WORKDIR app
