@@ -30,6 +30,9 @@ module.exports = {
     budjot: function() {
         return mongoose.model('budjot', budjotSchema);
     },
+    budjotEntry: function() {
+        return mongoose.model('budjotEntry', budjotEntrySchema);
+    },
     toBudjotJson: function(budjot) {
         var budjotEntries = [];
         for(var entry of budjot.entries) {
@@ -46,8 +49,18 @@ module.exports = {
             "entries": budjotEntries
         };
     },
-    fromBudjotJson: function(budjot) {
-        // todo
+    fromBudjotJson: function(budjotJson) {
+        var budjot = new this.budjot();
+        budjot.name = budjotJson.name;
+        budjot.income = budjotJson.income;
+        for(var entryJson of budjotJson.entries) {
+            var entry = new this.budjotEntry();      
+            entry.name = entryJson.name;
+            entry.amount = entryJson.amount;
+            entry.paid = entryJson.paid;
+            budjot.entries.push(entry);
+        }
+        return budjot;
     }
 };
 
