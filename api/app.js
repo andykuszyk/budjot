@@ -4,7 +4,7 @@ const config = require('./config');
 const google = require('./google');
 const mongo = require('./mongo');
 
-app.get('/jots', (req, res) => {
+app.get('/jots', async (req, res) => {
     // get the list of jots for the user in the auth header
     var id = await google.verify(req.get('Authorization'));
     if(id == null) {
@@ -22,14 +22,14 @@ app.get('/jots', (req, res) => {
     });
 })
 
-app.get('/jots/{id}', (req, res) => {
+app.get('/jots/{id}', async (req, res) => {
     // get the jot specified by the given id, provided it is for the user
     // in the auth header
     console.log(req)
     var id = await google.verify(req.get('Authorization'));
 })
 
-app.post('/jots', (req, res) => {
+app.post('/jots', async (req, res) => {
     // create a jot for the user in the auth header
     console.log(req)
     var id = await google.verify(req.get('Authorization'));
@@ -52,7 +52,7 @@ app.post('/jots', (req, res) => {
     });
 })
 
-app.put('/jots/{id}', (req, res) => {
+app.put('/jots/{id}', async (req, res) => {
     // update the jot with the given id, provided it exists for the user in the auth header
     console.log(req)
     var id = await google.verify(req.get('Authorization'));
