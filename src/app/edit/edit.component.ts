@@ -3,6 +3,8 @@ import { Budjot } from '../budjot';
 import { BudjotEntry } from '../budjotentry';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthBase } from '../authbase';
+import { AuthService } from 'angularx-social-login';
 
 @Component({
   selector: 'app-edit',
@@ -10,11 +12,12 @@ import { Injectable } from '@angular/core';
   styleUrls: ['./edit.component.css']
 })
 @Injectable()
-export class EditComponent implements OnInit {
+export class EditComponent extends AuthBase {
     budjot: Budjot;
     newEntry: BudjotEntry;
 
-    constructor(private http: HttpClient) {
+    constructor(http: HttpClient, authService: AuthService) {
+        super(http, authService);
         this.budjot = new Budjot("Test Budjot", 1000);
         this.budjot.addEntry(new BudjotEntry("Bills", 3.1415, true, () => this.budjot.updateFields()));
         this.newEntry = new BudjotEntry(null, null, null, () => this.budjot.updateFields());
@@ -31,11 +34,8 @@ export class EditComponent implements OnInit {
 
     save() {
         var url = window.location.protocol + '//' + window.location.host + '/jots';
-        this.http.post(url, this.budjot, { headers: new HttpHeaders({'Content-Type': 'application/json','Authorization': '1234'}), observe: 'response'}).subscribe(res => {
+        this.http.post(url, this.budjot, { headers: new HttpHeaders({'Content-Type': 'application/json','Authorization': this.idToken}), observe: 'response'}).subscribe(res => {
             console.log(res.status);
         });
     }
-
-    ngOnInit() {}
-
 }

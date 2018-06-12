@@ -6,8 +6,9 @@ import { Injectable, OnInit } from '@angular/core';
 export abstract class AuthBase implements OnInit {
     isLoggedIn: boolean;
     name: string;
+    idToken: string;
 
-    constructor(private http: HttpClient, private authService: AuthService) {}
+    constructor(protected http: HttpClient, private authService: AuthService) {}
     
     signInWithGoogle(): void {
         this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
@@ -25,6 +26,7 @@ export abstract class AuthBase implements OnInit {
             return; 
         }
         var idToken = user.idToken;
+        this.idToken = user.idToken;
         this.name = user.name;
         
         var url = window.location.protocol + '//' + window.location.host + '/users';
