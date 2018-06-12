@@ -3,6 +3,8 @@ const app = express();
 const config = require('./config');
 const google = require('./google');
 const mongo = require('./mongo');
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 app.get('/jots', async (req, res) => {
     // get the list of jots for the user in the auth header
@@ -36,8 +38,8 @@ app.post('/jots', async (req, res) => {
     if(id == null) {
         return res.status(401).send();
     }
-    mongo.budjot().find({ name: req.body.name }, function(err, budjots) {
-        if(err) {
+    mongo.budjot().find({ name: req.body.name }).then(function(err, budjots) {
+        if(err.length > 0) {
             return res.status(500).send();
         }
         if(budjots.length > 0) {
