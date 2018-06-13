@@ -41,12 +41,15 @@ app.post('/jots', async (req, res) => {
     mongo.budjot().find({ name: req.body.name }).exec()
     .then(function(budjots) {
         if(budjots.length > 0) {
-            return res.status(405).send();
+            res.status(405).send();
+            return new Promise(function(resolve, reject) { return null; })
         }
-        return mongo.fromBudjotJson(req.body).save();
+        return mongo.fromBudjotJson(req.body, id).save();
     })
-    .then(function() {
-        res.status(201).send(mongo.toBudjotJson(budjot));
+    .then(function(budjot) {
+        if(budjot) {
+            res.status(201).send(mongo.toBudjotJson(budjot));
+        }
     })
     .catch(function(error) {
         if(error){

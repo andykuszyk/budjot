@@ -49,16 +49,17 @@ module.exports = {
             "entries": budjotEntries
         };
     },
-    fromBudjotJson: function(budjotJson) {
+    fromBudjotJson: function(budjotJson, userId) {
         var budjot = new this.budjot()();
         budjot.entries = [];
         budjot.name = budjotJson.name;
         budjot.income = budjotJson.income;
+        budjot.userId = userId;
         for(var entryJson of budjotJson.entries) {
             var entry = new this.budjotEntry()();      
-            entry.name = entryJson.name;
-            entry.amount = entryJson.amount;
-            entry.paid = entryJson.paid;
+            entry.name = entryJson._name;
+            entry.amount = entryJson._amount;
+            entry.paid = entryJson._paid;
             budjot.entries.push(entry);
         }
         return budjot;
