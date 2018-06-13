@@ -38,19 +38,20 @@ app.post('/jots', async (req, res) => {
     if(id == null) {
         return res.status(401).send();
     }
-    mongo.budjot().find({ name: req.body.name }).then(function(err, budjots) {
-        if(err.length > 0) {
-            return res.status(500).send();
-        }
+    mongo.budjot().find({ name: req.body.name }).exec()
+    .then(function(budjots) {
         if(budjots.length > 0) {
             return res.status(405).send();
         }
-        mongo.fromBudjotJson(req.body).save(function(err, budjot) {
-            if(err) {
-                return res.status(500).send(err);
-            }
-            res.status(201).send(mongo.toBudjotJson(budjot));
-        });
+        return mongo.fromBudjotJson(req.body).save();
+    })
+    .then(function() {
+        res.status(201).send(mongo.toBudjotJson(budjot));
+    })
+    .catch(function(error) {
+        if(error){
+            res.status(500).send(error);
+        }
     });
 })
 
