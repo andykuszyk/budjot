@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { EditComponent } from './edit/edit.component';
+import { ListComponent } from './list/list.component';
 
 let config = new AuthServiceConfig([
     {
@@ -26,7 +27,8 @@ export function provideConfig() {
     AppComponent,
     LoginComponent,
     HomeComponent,
-    EditComponent
+    EditComponent,
+    ListComponent
   ],
   imports: [
       BrowserModule,

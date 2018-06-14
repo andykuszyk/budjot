@@ -20,6 +20,8 @@ export abstract class AuthBase implements OnInit {
         }
     }
 
+    onSignedIn() {}
+
     onSignIn(user: any) {
         if(user == null) { 
             this.isLoggedIn = false;
@@ -40,6 +42,7 @@ export abstract class AuthBase implements OnInit {
             } else {
                 console.log('Unknown response from /users: ' + res.status);
             }
+            this.onSignedIn();
         });
     }
 

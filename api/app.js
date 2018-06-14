@@ -12,15 +12,16 @@ app.get('/jots', async (req, res) => {
     if(id == null) {
         return res.status(401).send();
     }
-    mongo.budjot().find({ userId: id }, function(err, budjots) {
-        if(err) {
-            return res.status(500).send(err);
-        }
+    mongo.budjot().find({ userId: id }, 'name _id')
+    .then(function(budjots) {
         var returnBudjots = [];
         for(var budjot of budjots) {
             returnBudjots.push(mongo.toBudjotJson(budjot));
         }
         res.status(200).send(returnBudjots);
+    })
+    .catch(function(error) {
+        res.status(500).send(err);
     });
 })
 

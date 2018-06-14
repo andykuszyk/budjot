@@ -35,12 +35,15 @@ module.exports = {
     },
     toBudjotJson: function(budjot) {
         var budjotEntries = [];
-        for(var entry of budjot.entries) {
-            budjotEntries.push({
-                "name": entry.name,
-                "amount": entry.amount,
-                "paid": entry.paid
-            });
+        if(budjot.entries)
+        {
+            for(var entry of budjot.entries) {
+                budjotEntries.push({
+                    "name": entry.name,
+                    "amount": entry.amount,
+                    "paid": entry.paid
+                });
+            }
         }
         return {
             "id": budjot._id,
