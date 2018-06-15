@@ -6,8 +6,8 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="budjot of budjots">
-            <td>{{budjot._id}}</td>
+        <tr *ngFor="let budjot of budjots">
+            <td>{{budjot.id}}</td>
             <td>{{budjot.name}}</td>
         </tr>
     </tbody>
