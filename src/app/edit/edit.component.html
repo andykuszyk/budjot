@@ -1,7 +1,12 @@
 <div class="container">
     <div class="row">
         <div class="col" style="text-align:center">
-            <h2><u>{{budjot.name}}</u></h2>
+             <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="name">Name</span>
+                </div>
+                <input type="string" class="form-control" aria-describedby="name" [(ngModel)]="budjot.name">
+            </div>
         </div>
     </div>
     <div class="row">
