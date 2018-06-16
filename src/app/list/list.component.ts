@@ -3,6 +3,8 @@ import { AuthBase } from '../authbase';
 import { AuthService } from 'angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Budjot } from '../budjot';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -14,7 +16,7 @@ export class ListComponent extends AuthBase {
 
     budjots: any;
 
-    constructor(http: HttpClient, authService: AuthService) {
+    constructor(http: HttpClient, authService: AuthService, private router: Router) {
         super(http, authService);
     }
     
@@ -26,5 +28,9 @@ export class ListComponent extends AuthBase {
             console.log(res);
             this.budjots = res.body;
         });
+    }
+
+    openBudjot(budjot: any) {
+        this.router.navigate(['edit', budjot.id ]);
     }
 }

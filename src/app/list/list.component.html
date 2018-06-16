@@ -1,12 +1,12 @@
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
-            <td>Id</td>
-            <td>Name</td>
+            <th>Id</th>
+            <th>Name</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let budjot of budjots">
+        <tr *ngFor="let budjot of budjots" (click)="openBudjot(budjot)">
             <td>{{budjot.id}}</td>
             <td>{{budjot.name}}</td>
         </tr>

@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthBase } from '../authbase';
 import { AuthService } from 'angularx-social-login';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edit',
@@ -15,12 +16,17 @@ import { AuthService } from 'angularx-social-login';
 export class EditComponent extends AuthBase {
     budjot: Budjot;
     newEntry: BudjotEntry;
+    public id: string;
 
-    constructor(http: HttpClient, authService: AuthService) {
+    constructor(http: HttpClient, authService: AuthService, private route: ActivatedRoute) {
         super(http, authService);
         this.budjot = new Budjot("Test Budjot", 1000);
         this.budjot.addEntry(new BudjotEntry("Bills", 3.1415, true, () => this.budjot.updateFields()));
         this.newEntry = new BudjotEntry(null, null, null, () => this.budjot.updateFields());
+    }
+
+    protected onInit() {
+        this.id = this.route.snapshot.paramMap.get('id');
     }
 
     add() {

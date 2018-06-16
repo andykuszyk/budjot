@@ -51,5 +51,8 @@ export abstract class AuthBase implements OnInit {
             console.log(user);
             this.onSignIn(user);
         });
+        this.onInit();
     }
+
+    protected onInit() {}
 }
