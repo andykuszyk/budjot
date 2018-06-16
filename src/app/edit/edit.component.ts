@@ -34,6 +34,9 @@ export class EditComponent extends AuthBase {
             this.http.get(url, { headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': this.idToken}), observe: 'response' }).subscribe(res => {
                 console.log(res);
                 this.budjot = new Budjot(res.body['name'], res.body['income']);
+                for(let entry of res.body['entries']) {
+                    this.budjot.addEntry(new BudjotEntry(entry['name'], entry['amount'], entry['paid'], () => this.budjot.updateFields()));
+                }
             });
         }
     }
