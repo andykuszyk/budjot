@@ -20,13 +20,22 @@ export class EditComponent extends AuthBase {
 
     constructor(http: HttpClient, authService: AuthService, private route: ActivatedRoute) {
         super(http, authService);
-        this.budjot = new Budjot("Test Budjot", 1000);
-        this.budjot.addEntry(new BudjotEntry("Bills", 3.1415, true, () => this.budjot.updateFields()));
+        //this.budjot = new Budjot("Test Budjot", 1000);
+        //this.budjot.addEntry(new BudjotEntry("Bills", 3.1415, true, () => this.budjot.updateFields()));
         this.newEntry = new BudjotEntry(null, null, null, () => this.budjot.updateFields());
     }
 
     protected onInit() {
         this.id = this.route.snapshot.paramMap.get('id');
+        if(this.id == 'new') {
+            this.budjot = new Budjot('New Budjot', 0);
+        } else {
+            var url  = window.location.protocol + '//' + window.location.host + '/jots/' + this.id;
+            this.http.get(url, { headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': this.idToken}), observe: 'response' }).subscribe(res => {
+                console.log(res);
+            });
+            this.budjot = new Budjot(this.id, 0);
+        }
     }
 
     add() {

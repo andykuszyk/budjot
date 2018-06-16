@@ -34,7 +34,6 @@ app.get('/jots/{id}', async (req, res) => {
 
 app.post('/jots', async (req, res) => {
     // create a jot for the user in the auth header
-    console.log(req)
     var id = await google.verify(req.get('Authorization'));
     if(id == null) {
         return res.status(401).send();
