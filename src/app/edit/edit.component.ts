@@ -33,8 +33,8 @@ export class EditComponent extends AuthBase {
             var url  = window.location.protocol + '//' + window.location.host + '/jots/' + this.id;
             this.http.get(url, { headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': this.idToken}), observe: 'response' }).subscribe(res => {
                 console.log(res);
+                this.budjot = new Budjot(res.body['name'], res.body['income']);
             });
-            this.budjot = new Budjot(this.id, 0);
         }
     }
 

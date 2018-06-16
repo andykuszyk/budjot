@@ -25,11 +25,23 @@ app.get('/jots', async (req, res) => {
     });
 })
 
-app.get('/jots/{id}', async (req, res) => {
+app.get('/jots/:id', async (req, res) => {
     // get the jot specified by the given id, provided it is for the user
     // in the auth header
-    console.log(req)
+    console.log(req.params.id)
     var id = await google.verify(req.get('Authorization'));
+    if(id == null) {
+        return res.status(401).send();
+    }
+    mongo.budjot().findById(req.params.id).exec()
+    .then(function(budjot) {
+        return res.status(200).send(mongo.toBudjotJson(budjot));
+    })
+    .catch(function(error) {
+        if(error) {
+            return res.status(500).send(error);
+        }
+    });
 })
 
 app.post('/jots', async (req, res) => {
