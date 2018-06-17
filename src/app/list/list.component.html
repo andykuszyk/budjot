@@ -1,14 +1,27 @@
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let budjot of budjots" (click)="openBudjot(budjot)">
-            <td>{{budjot.id}}</td>
-            <td>{{budjot.name}}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let budjot of budjots" (click)="openBudjot(budjot)">
+                        <td>{{budjot.id}}</td>
+                        <td>{{budjot.name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a routerLink="/edit/new"><button class="btn btn-primary">New</button></a>
+        </div>
+    </div>
+</div> 
+
+
