@@ -4,26 +4,46 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Name</th>
                         <th>Created</th>
                         <th>Modified</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let budjot of budjots" (click)="openBudjot(budjot)">
-                        <td>{{budjot.name}}</td>
-                        <td>{{budjot.createdOn | date}}</td>
-                        <td>{{budjot.modifiedOn | date}}</td>
+                    <tr *ngFor="let budjot of budjots">
+                        <td><input type="checkbox" class="checkbox" [(ngModel)]="budjot.isSelected" (click)="onBudjotSelected(budjot)"/></td>
+                        <td (click)="openBudjot(budjot)">{{budjot.name}}</td>
+                        <td (click)="openBudjot(budjot)">{{budjot.createdOn | date}}</td>
+                        <td (click)="openBudjot(budjot)">{{budjot.modifiedOn | date}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="row">
+    <div class="row" style="text-align:right">
         <div class="col">
-            <a routerLink="/edit/new"><button class="btn btn-primary">New</button></a>
+            <a routerLink="/edit/new"><button class="btn btn-success">New</button></a>
+            <button class="btn btn-primary" [disabled]="!isBudjotSelected()">Copy</button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" [disabled]="!isBudjotSelected()">Delete</button>
         </div>
     </div>
 </div> 
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Are you sure?</h5>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this Budjot? This action cannot be undone!
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-primary" (click)="deleteSelectedBudjot()">Yes</button>
+                <button class="btn btn-secondary" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
