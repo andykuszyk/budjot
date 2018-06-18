@@ -4,14 +4,16 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Name</th>
+                        <th>Created</th>
+                        <th>Modified</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let budjot of budjots" (click)="openBudjot(budjot)">
-                        <td>{{budjot.id}}</td>
                         <td>{{budjot.name}}</td>
+                        <td>{{budjot.createdOn | date}}</td>
+                        <td>{{budjot.modifiedOn | date}}</td>
                     </tr>
                 </tbody>
             </table>

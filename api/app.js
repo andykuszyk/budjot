@@ -12,7 +12,7 @@ app.get('/jots', async (req, res) => {
     if(id == null) {
         return res.status(401).send();
     }
-    mongo.budjot().find({ userId: id }, 'name _id')
+    mongo.budjot().find({ userId: id }, 'name _id createdOn modifiedOn')
     .then(function(budjots) {
         var returnBudjots = [];
         for(var budjot of budjots) {
@@ -56,7 +56,10 @@ app.post('/jots', async (req, res) => {
             res.status(405).send();
             return new Promise(function(resolve, reject) { return null; })
         }
-        return mongo.fromBudjotJson(req.body, id).save();
+        var budjot = mongo.fromBudjotJson(req.body, id);
+        budjot.createdOn = Date.now();
+        budjot.modifiedOn = budjot.createdOn;
+        return budjot.save();
     })
     .then(function(budjot) {
         if(budjot) {
@@ -82,6 +85,7 @@ app.put('/jots/:id', async (req, res) => {
         budjot.name = reqBudjot.name;
         budjot.income = reqBudjot.income;
         budjot.userId = reqBudjot.userId;
+        budjot.modifiedOn = Date.now();
         budjot.entries = reqBudjot.entries;
         return budjot.save();
     })

@@ -20,6 +20,8 @@ var budjotSchema = new mongoose.Schema({
     name: { type: 'string', index: true },
     userId: { type: 'string', index: true },
     income: 'number',
+    createdOn: 'date',
+    modifiedOn: 'date',
     entries: [budjotEntrySchema]
 });
 
@@ -49,6 +51,8 @@ module.exports = {
             "id": budjot._id,
             "name": budjot.name,
             "income": budjot.income,
+            "createdOn": budjot.createdOn,
+            "modifiedOn": budjot.modifiedOn,
             "entries": budjotEntries
         };
     },
