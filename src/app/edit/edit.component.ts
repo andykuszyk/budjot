@@ -23,6 +23,7 @@ export class EditComponent extends AuthBase {
 
     constructor(http: HttpClient, authService: AuthService, private route: ActivatedRoute) {
         super(http, authService);
+        this.budjot = new Budjot('', 0);
         this.newEntry = new BudjotEntry(null, null, null, () => this.budjot.updateFields());
     }
 
