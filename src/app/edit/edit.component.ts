@@ -51,25 +51,33 @@ export class EditComponent extends AuthBase {
        this.budjot.removeEntry(index); 
     }
 
+    saveSuccessModal() {
+        this.savedModalTitle = "Save successful";
+        this.savedModalBody = "The budjot has been saved successfully.";
+        $("#openSavedModal").click();
+    }
+
+    saveErrorModal() {
+        this.savedModalTitle = "An error occured";
+        this.savedModalBody = "Something went wrong saving the budjot, please try again."
+        $("#openSavedModal").click();
+    }
+
     save() {
         var url = window.location.protocol + '//' + window.location.host + '/jots';
-        this.http.post(url, this.budjot, { headers: new HttpHeaders({'Content-Type': 'application/json','Authorization': this.idToken}), observe: 'response'})
-            .subscribe(
-                res => {
-                    this.savedModalTitle = "Save successful";
-                    this.savedModalBody = "The budjot has been saved successfully.";
-                    $("#savedModal").modal();
-                },
-                res => {
-                    if(res.status == 405) {
-                        this.savedModalTitle = "Need to put";
-                        this.savedModalBody = "The budjot has already been posted - it should be put instead.";
-                    } else {
-                        this.savedModalTitle = "An error occured";
-                        this.savedModalBody = "Something went wrong saving the budjot, please try again."
-                    }
-                    $("#openSavedModal").click();
+        this.http.post(url, this.budjot, { headers: new HttpHeaders({'Content-Type': 'application/json','Authorization': this.idToken}), observe: 'response'}).subscribe(
+            res => { this.saveSuccessModal(); },
+            res => {
+                if(res.status == 405) {
+                    url = url + '/' + this.id;
+                    this.http.put(url, this.budjot, { headers: new HttpHeaders({'Content-Type': 'application/json','Authorization': this.idToken}), observe: 'response'}).subscribe(
+                        res => { this.saveSuccessModal(); },
+                        res => { this.saveErrorModal(); }
+                    );
+                } else {
+                    this.saveErrorModal();
                 }
-            );
+            }
+        );
     }
 }

@@ -70,10 +70,27 @@ app.post('/jots', async (req, res) => {
     });
 })
 
-app.put('/jots/{id}', async (req, res) => {
-    // update the jot with the given id, provided it exists for the user in the auth header
-    console.log(req)
+app.put('/jots/:id', async (req, res) => {
+    // update the jot with the given id, provided it exists for the user in the auth header 
     var id = await google.verify(req.get('Authorization'));
+    if(id == null) {
+        return res.status(401).send();
+    }
+    mongo.budjot().findById(req.params.id)
+    .then(function(budjot) {
+        var reqBudjot = mongo.fromBudjotJson(req.body, id)
+        budjot.name = reqBudjot.name;
+        budjot.income = reqBudjot.income;
+        budjot.userId = reqBudjot.userId;
+        budjot.entries = reqBudjot.entries;
+        return budjot.save();
+    })
+    .then(function(budjot) {
+        return res.status(204).send();
+    })
+    .catch(function(error) {
+        return res.status(500).send(error);
+    });
 })
 
 app.post('/users', async (req, res) => {
