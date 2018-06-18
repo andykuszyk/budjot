@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { AuthBase } from '../authbase';
 import { AuthService } from 'angularx-social-login';
 import { ActivatedRoute } from '@angular/router';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-edit',
@@ -17,6 +18,8 @@ export class EditComponent extends AuthBase {
     budjot: Budjot;
     newEntry: BudjotEntry;
     public id: string;
+    savedModalTitle: string;
+    savedModalBody: string;
 
     constructor(http: HttpClient, authService: AuthService, private route: ActivatedRoute) {
         super(http, authService);
@@ -50,14 +53,23 @@ export class EditComponent extends AuthBase {
 
     save() {
         var url = window.location.protocol + '//' + window.location.host + '/jots';
-        this.http.post(url, this.budjot, { headers: new HttpHeaders({'Content-Type': 'application/json','Authorization': this.idToken}), observe: 'response'}).subscribe(res => {
-            if(res.status == 405) {
-
-            } else if (res.status == 201) {
-
-            } else {
-
-            }
-        });
+        this.http.post(url, this.budjot, { headers: new HttpHeaders({'Content-Type': 'application/json','Authorization': this.idToken}), observe: 'response'})
+            .subscribe(
+                res => {
+                    this.savedModalTitle = "Save successful";
+                    this.savedModalBody = "The budjot has been saved successfully.";
+                    $("#savedModal").modal();
+                },
+                res => {
+                    if(res.status == 405) {
+                        this.savedModalTitle = "Need to put";
+                        this.savedModalBody = "The budjot has already been posted - it should be put instead.";
+                    } else {
+                        this.savedModalTitle = "An error occured";
+                        this.savedModalBody = "Something went wrong saving the budjot, please try again."
+                    }
+                    $("#openSavedModal").click();
+                }
+            );
     }
 }
