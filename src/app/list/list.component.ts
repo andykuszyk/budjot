@@ -23,7 +23,10 @@ export class ListComponent extends AuthBase {
     
     onSignedIn() {
         if(!this.isLoggedIn) return;
+        this.getBudjots();
+    }
 
+    getBudjots() {
         var url = window.location.protocol + '//' + window.location.host + '/jots';
         this.http.get(url, { headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': this.idToken}), observe: 'response' }).subscribe(res => {
             console.log(res);
@@ -48,7 +51,9 @@ export class ListComponent extends AuthBase {
         console.log('Deleting budjot: ' + budjot.name);
         var url = window.location.protocol + '//' + window.location.host + '/jots/' + budjot.id;
         this.http.delete(url, { headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': this.idToken}), observe: 'response' }).subscribe(res => {
-            
+            if(res.status == 200) {
+                this.getBudjots();
+            }
         });
     }
 
