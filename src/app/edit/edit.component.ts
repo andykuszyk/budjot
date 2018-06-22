@@ -67,7 +67,10 @@ export class EditComponent extends AuthBase {
     save() {
         var url = window.location.protocol + '//' + window.location.host + '/jots';
         this.http.post(url, this.budjot, { headers: new HttpHeaders({'Content-Type': 'application/json','Authorization': this.idToken}), observe: 'response'}).subscribe(
-            res => { this.saveSuccessModal(); },
+            res => { 
+                this.id = res['body']['id'];
+                this.saveSuccessModal(); 
+            },
             res => {
                 if(res.status == 405) {
                     url = url + '/' + this.id;

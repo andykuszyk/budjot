@@ -24,7 +24,7 @@
     <div class="row" style="text-align:right">
         <div class="col">
             <a routerLink="/edit/new"><button class="btn btn-success">New</button></a>
-            <button class="btn btn-primary" [disabled]="!isBudjotSelected()">Copy</button>
+            <button class="btn btn-primary" [disabled]="!isBudjotSelected()" data-target="#copyModal" data-toggle="modal">Copy</button>
             <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" [disabled]="!isBudjotSelected()">Delete</button>
         </div>
     </div>
@@ -41,6 +41,22 @@
             <div class="modal-footer">
                 <button data-dismiss="modal" class="btn btn-primary" (click)="deleteSelectedBudjot()">Yes</button>
                 <button class="btn btn-secondary" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="copyModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Please enter a new name</h5>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control" [(ngModel)]="copyBudjotName">
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-primary" (click)="copyBudjot()">Ok</button>
+                <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>

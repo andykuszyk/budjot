@@ -25,6 +25,20 @@ app.get('/jots', async (req, res) => {
     });
 })
 
+app.delete('/jots/:id', async (req, res) => {
+    var id = await google.verify(req.get('Authorization'));
+    if(id == null) {
+        return res.status(401).send();
+    }
+    mongo.budjot().findByIdAndDelete(req.params.id).exec()
+    .then(function(budjot) {
+        return res.status(200).send();
+    })
+    .catch(function(error) {
+        return res.status(500).send(e);
+    });
+});
+
 app.get('/jots/:id', async (req, res) => {
     // get the jot specified by the given id, provided it is for the user
     // in the auth header
