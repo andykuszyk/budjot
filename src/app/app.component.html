@@ -12,11 +12,11 @@
                 <a class="nav-link" routerLink="/list">My jots</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Login/Signup</a>
+                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">{{isLoggedIn ? 'Signed in as ' + name : 'Login/Signup'}}</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Login</a>
-                    <a class="dropdown-item" href="#">Signup</a>
-                    <a class="dropdown-item" href="#">Logout</a>
+                    <a class="dropdown-item" href="#" *ngIf="!isLoggedIn" (click)="signInWithGoogle()">Login</a>
+                    <a class="dropdown-item" href="#" *ngIf="!isLoggedIn" (click)="signInWithGoogle()">Signup</a>
+                    <a class="dropdown-item" href="#" *ngIf="isLoggedIn" (click)="signOut()">Logout</a>
                 </div>
             </li>
         </ul>
