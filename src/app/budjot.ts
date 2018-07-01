@@ -3,12 +3,21 @@ import { BudjotEntry } from './budjotentry';
 export class Budjot {
     id: number;
     name: string;
-    income: number;
+    private _income: number;
     expenditure: number;
     paid: number;
     remaining: number;
     credit: number;
     entries: BudjotEntry[];
+
+    get income(): number {
+        return this._income;
+    }
+
+    set income(newIncome: number) {
+        this._income = newIncome;
+        this.updateFields();
+    }
 
     constructor(name: string, income: number) {
         this.name = name;
@@ -32,6 +41,7 @@ export class Budjot {
         let paid = 0;
         if(this.entries == null){
             console.log("Warning! entries is null!");
+            return
         }
         for (let entry of this.entries) {
             expenditure += entry.amount;
