@@ -66,7 +66,7 @@ export class EditComponent extends AuthBase {
 
     save() {
         var url = window.location.protocol + '//' + window.location.host + '/jots';
-        this.http.post(url, this.budjot, { headers: new HttpHeaders({'Content-Type': 'application/json','Authorization': this.idToken}), observe: 'response'}).subscribe(
+        this.http.post(url, this.budjot.toJson(), { headers: new HttpHeaders({'Content-Type': 'application/json','Authorization': this.idToken}), observe: 'response'}).subscribe(
             res => { 
                 this.id = res['body']['id'];
                 this.saveSuccessModal(); 
@@ -74,7 +74,7 @@ export class EditComponent extends AuthBase {
             res => {
                 if(res.status == 405) {
                     url = url + '/' + this.id;
-                    this.http.put(url, this.budjot, { headers: new HttpHeaders({'Content-Type': 'application/json','Authorization': this.idToken}), observe: 'response'}).subscribe(
+                    this.http.put(url, this.budjot.toJson(), { headers: new HttpHeaders({'Content-Type': 'application/json','Authorization': this.idToken}), observe: 'response'}).subscribe(
                         res => { this.saveSuccessModal(); },
                         res => { this.saveErrorModal(); }
                     );

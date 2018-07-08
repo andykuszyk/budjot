@@ -19,6 +19,15 @@ export class Budjot {
         this.updateFields();
     }
 
+    toJson() {
+        return {
+            income: this.income,
+            name: this.name,
+            id: this.id,
+            entries: this.entries,
+        }
+    }
+
     constructor(name: string, income: number) {
         this.name = name;
         this.income = income;
