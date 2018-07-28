@@ -9,8 +9,6 @@ before_script:
 - docker login -u $dockerhubuser -p $dockerhubpassword docker.io
 script:
 - ng build --prod
-- sed -i s/mongoUser/$mongoUser/g Dockerfile
-- sed -i s/mongoPassword/$mongoPassword/g Dockerfile
 - "./dockerbuild.sh"
 before_install:
 - openssl aes-256-cbc -K $encrypted_59a64ada46b3_key -iv $encrypted_59a64ada46b3_iv -in id_rsa.enc -out id_rsa -d

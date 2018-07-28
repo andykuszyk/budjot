@@ -1,0 +1,13 @@
+version: "3"
+services:
+    budjot:
+        image: andykuszyk/budjot:[version]
+        environment:
+            - MONGOUSER=[mongouser]
+            - MONGOPASSWORD=[mongopassword]
+        ports: 
+            - "4201:8080"
+        networks:
+            - net
+networks:
+    net:

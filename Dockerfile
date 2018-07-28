@@ -6,5 +6,5 @@ COPY ./package.json app/
 WORKDIR app
 RUN npm install
 EXPOSE 8080
-CMD node ./api/app.js 8080 mongoUser mongoPassword
+CMD node ./api/app.js 8080 $MONGOUSER $MONGOPASSWORD
 
