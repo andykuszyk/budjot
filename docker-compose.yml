@@ -6,7 +6,7 @@ services:
             - MONGOUSER=[mongouser]
             - MONGOPASSWORD=[mongopassword]
         ports: 
-            - "4201:8080"
+            - "4201:80"
         networks:
             - net
 networks:
