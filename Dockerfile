@@ -5,5 +5,5 @@ COPY ./api/* app/api/
 COPY ./package.json app/
 WORKDIR app
 RUN npm install
-CMD node ./api/app.js 80 $MONGOUSER $MONGOPASSWORD
+CMD node ./api/app.js 80 $MONGOURL
 
