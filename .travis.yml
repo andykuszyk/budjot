@@ -10,10 +10,6 @@ before_script:
 script:
 - ng build --prod
 - "./dockerbuild.sh"
-before_install:
-- openssl aes-256-cbc -K $encrypted_59a64ada46b3_key -iv $encrypted_59a64ada46b3_iv
-  -in id_rsa.enc -out id_rsa -d
-- chmod 700 id_rsa
 notifications:
   slack:
     secure: cN1hDoxW08pYN440VJhCp2l6CCMXfUt2NOqPMWMDsSrjJS2QfCMytpgwL7ZgBWymesuoOHeVD0bLu5bQidT1LSTJcoq0uqybtHicXSW1zKG6p+0dk855Sd0FKprEzaNWGz9Hwr4Sqkt56sXu846UpoGf6tWypZ2EURk1JCzN1pgMFd0M4cbZssi1doU6ex0t5qOlNBvdiGgubTx7PuQmtZTJqhiz6ctYCHbuXhJzda5TGsF6p47Xj4MTDkPDGd443BIWAdLThvJYPTepQjpbNehD9XufJLYhkfreQ3sv6k4K0F0z6QS6NFnsIwXdx7nUh9e/C9vHSrQXOF5nzPA5i0sj7w6AeWklL10vi9uXuTLjwr8EzG/SgoVqXDzhabQqDC7z3OBH8CbFGIIoi6e9pmDHB3RXbt3TBHAeU+4q57KmDAs12//7YdE11P80G5n9rzxvK0GxUQufuXhDq2M/6ZpWuOfBVD6D4LCVd9GAKYFabtWTGYDT2ikFNj8aH8LhIbR1SxuzO9gEg4hI+KyE5FnQVIGe3j71S/OIWCxlplACPt7hT4zIId28I9xO6UA8HBmY8wu065/xhVCrH74c/a25sGljFv2d3Qm9T6UVigYUDqy0rHbrLC2KQoTwufPiAmURJVCLpVHdldnAFb2SUoz+C4jS7AJZvA20Xlhcj64=
