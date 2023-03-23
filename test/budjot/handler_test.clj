@@ -17,8 +17,22 @@
     (is (= (:status response) 200))))
 
 (deftest post-jots
-  (let [response (app (mock/request :post "/jots"))]
-    (is (= (:status response) 201))))
+  (let [response (app (mock/json-body (mock/request :post "/jots")
+                                      {:name "mm/yy"
+                                       :income 1000
+                                       :userid "abc123"
+                                       :entries [{:name "shopping"
+                                                  :amount "25"
+                                                  :paid false}
+                                                 {:name "fuel"
+                                                  :amount "70"
+                                                  :paid true}]}))]
+    (is (= 201 (:status response)))
+    (is (= {:name "mm/yy"
+            :income 1000
+            :userid "abc123"
+            :entries [{:name "shopping" :amount "25" :paid false}
+                      {:name "fuel" :amount "70" :paid true}]} (:body response)))))
 
 (deftest put-jots-by-id
   (let [response (app (mock/request :put "/jots/1"))]

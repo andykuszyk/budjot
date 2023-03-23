@@ -1,0 +1,6 @@
+* post jots
+** DONE simple 201 resonse test
+** TODO add google oauth to middleware
+not good support for google oauth verification in community
+might need to wrap [[https://github.com/googleapis/google-api-java-client/blob/main/google-api-client/src/main/java/com/google/api/client/googleapis/auth/oauth2/GoogleIdTokenVerifier.java][this java class]]
+** TODO request/response payloads
