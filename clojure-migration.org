@@ -1,6 +1,14 @@
-* post jots
+* development instructions
+** launch cider with ~M-x cider-jack-in~
+** load namespaces and files with ~M-x cider-load-all-project-ns~
+** navigate to a test, e.g. ~post-jots~
+** run test with ~M-x cider-test-run-test~
+** after changing a file, reload with ~M-x cider-load-buffer~
+* post jots [2/4]
 ** DONE simple 201 resonse test
-** TODO add google oauth to middleware
+** DONE request/response payloads
+** TODO add persistence to database
+** TODO add google oauth to middleware and test oauth flow
 not good support for google oauth verification in community
 might need to wrap [[https://github.com/googleapis/google-api-java-client/blob/main/google-api-client/src/main/java/com/google/api/client/googleapis/auth/oauth2/GoogleIdTokenVerifier.java][this java class]]
-** TODO request/response payloads
+presumably we'll need a mock oauth back end as well
