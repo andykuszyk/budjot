@@ -1,6 +1,7 @@
 (ns budjot.handler-test
   (:require [clojure.test :refer :all]
             [ring.mock.request :as mock]
+            [clojure.data.json :as json]
             [budjot.handler :refer :all]))
 
 (deftest get-jots
@@ -32,7 +33,8 @@
             :income 1000
             :userid "abc123"
             :entries [{:name "shopping" :amount "25" :paid false}
-                      {:name "fuel" :amount "70" :paid true}]} (:body response)))))
+                      {:name "fuel" :amount "70" :paid true}]}
+           (json/read-str (:body response) :key-fn keyword)))))
 
 (deftest put-jots-by-id
   (let [response (app (mock/request :put "/jots/1"))]

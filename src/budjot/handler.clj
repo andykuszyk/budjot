@@ -7,8 +7,8 @@
 
 (defroutes budjot-handler
   (GET "/" [] "Hello World")
-  (wrap-json-body (POST "/jots" request (handle-budjot-post request) {:keywords? true}))
+  (POST "/jots" request (handle-budjot-post request))
   (route/not-found "Not Found"))
 
 (def app
-  (wrap-defaults budjot-handler api-defaults))
+  (wrap-defaults (wrap-json-response (wrap-json-body budjot-handler {:keywords? true})) api-defaults))

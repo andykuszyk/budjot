@@ -10,4 +10,5 @@
   :ring {:handler budjot.handler/app}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
+                        [org.clojure/data.json "2.4.0"]
                         [ring/ring-mock "0.3.2"]]}})
