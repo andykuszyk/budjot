@@ -1,10 +1,22 @@
 (ns budjot.main
   (:require [ring.adapter.jetty :refer [run-jetty]]
+            [ring.middleware.json :refer [wrap-json-body]]
             [clojure.data.json :as json])
   (:gen-class))
 
+(defn handle-post-jots [request]
+  {:status 201
+   :body (json/write-str (:body request))})
+
+(defn handle-post-users [request]
+  {:status 201
+   :body (json/write-str (:body request))})
+
 (defn handle-post [request]
-  {:status 201 :body (json/write-str {:message "created"})})
+  (case (:uri request)
+    "/jots" (handle-post-jots request)
+    "/users" (handle-post-users request)
+    {:status 400}))
 
 (defn handle-get [request]
   {:status 200 :body (json/write-str {:message "you got me"})})
@@ -23,7 +35,7 @@
     :delete (handle-delete request)))
 
 (defn start-budjot [join? port]
-  (run-jetty handler {:join? join? :port port}))
+  (run-jetty (wrap-json-body handler {:keywords? true}) {:join? join? :port port}))
 
 (defn -main
   "Budjot entrypoint"
