@@ -21,3 +21,13 @@
     (f)
     (.stop server)
     (stop-mongo)))
+
+(defn jot [name]
+  {:name name
+   :income 1000
+   :userid "abc123"
+   :entries [{:name "shopping" :amount "25":paid false}
+             {:name "fuel" :amount "70" :paid true}]})
+
+(defn post-request [j]
+  {:form-params j :content-type :json})

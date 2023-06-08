@@ -2,12 +2,16 @@
   (:require [ring.adapter.jetty :refer [run-jetty]]
             [ring.middleware.json :refer [wrap-json-body]]
             [somnium.congomongo :as m]
+            [clojure.string :refer [starts-with?]]
             [clojure.data.json :as json])
   (:gen-class))
 
 (defn insert-jot [jot]
   (let [now (new java.util.Date)]
     (m/insert! :budjot (merge jot {:createdOn now :modifiedOn now}))))
+
+(defn get-jot [id]
+  (m/fetch-one :budjot :where {:_id (new org.bson.types.ObjectId id)}))
 
 (defn handle-post-jots [request]
   (let [jot (m/fetch-one :budjot :where {:name (:name (:body request))})]
@@ -25,8 +29,25 @@
     "/users" (handle-post-users request)
     {:status 400}))
 
+(defn get-jot-id [uri]
+  (let [matches (re-matches #"/jots/(.*)" uri)]
+    (if (not= 2 (count matches))
+      nil
+      (get matches 1))))
+
+(defn handle-get-jots [request]
+  (let [jot-id (get-jot-id (:uri request))]
+    (if (= nil jot-id)
+      {:status 400}
+      (let [found-jot (get-jot jot-id)]
+        (if (= nil found-jot)
+          {:status 404}
+          {:status 200 :body (json/write-str found-jot)})))))
+
 (defn handle-get [request]
-  {:status 200 :body (json/write-str {:message "you got me"})})
+  (if (starts-with? (:uri request) "/jots")
+    (handle-get-jots request)
+    {:status 400}))
 
 (defn handle-put [request]
   {:status 200 :body (json/write-str {:message "you'll have to put up with this"})})
