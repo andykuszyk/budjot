@@ -41,11 +41,13 @@
     (is (= 201 (:status response)))
     (let [actual (json/read-str (:body response) :key-fn keyword)
           expected (jot "new jot")]
-      (is (= (:name actual) (:name expected)))
-      (is (= (:income actual) (:income expected)))
-      (is (= (:userid actual) (:userid expected)))
-      (is (= (:entries actual) (:entries expected)))
-      (is (>= (.length (:_id actual)) 3)))))
+      (is (= (:name expected) (:name actual)))
+      (is (= (:income expected) (:income actual)))
+      (is (= (:userid expected) (:userid actual)))
+      (is (= (:entries expected) (:entries actual)))
+      (is (>= (.length (:createdOn actual)) 0))
+      (is (>= (.length (:modifiedOn actual)) 0))
+      (is (= 24 (.length (:_id actual)))))))
 
 (deftest post-bad-url-returns-400
   (is (thrown-with-msg? Exception #"status 400" (client/post "http://localhost:8080"))))

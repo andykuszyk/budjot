@@ -6,7 +6,8 @@
   (:gen-class))
 
 (defn insert-jot [jot]
-  (m/insert! :budjot jot))
+  (let [now (new java.util.Date)]
+    (m/insert! :budjot (merge jot {:createdOn now :modifiedOn now}))))
 
 (defn handle-post-jots [request]
   (let [jot (m/fetch-one :budjot :where {:name (:name (:body request))})]
