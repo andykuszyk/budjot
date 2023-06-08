@@ -7,6 +7,7 @@
                  [ring/ring-jetty-adapter "1.10.0"]
                  [ring/ring-json "0.5.1"]
                  [org.clojure/data.json "2.4.0"]
+                 [congomongo "2.6.0"]
                  [ring/ring-defaults "0.3.2"]]
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]

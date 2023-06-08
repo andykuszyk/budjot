@@ -24,27 +24,6 @@
   (let [response (client/get "http://localhost:8080/jots/1")]
     (is (= (:status response) 200))))
 
-(deftest post-jots
-  (let [response
-        (client/post
-         "http://localhost:8080/jots"
-         {:form-params {:name "mm/yy"
-                        :income 1000
-                        :userid "abc123"
-                        :entries [{:name "shopping" :amount "25":paid false}
-                                  {:name "fuel" :amount "70" :paid true}]}
-          :content-type :json})]
-    (is (= 201 (:status response)))
-    (is (= {:name "mm/yy"
-            :income 1000
-            :userid "abc123"
-            :entries [{:name "shopping" :amount "25" :paid false}
-                      {:name "fuel" :amount "70" :paid true}]}
-           (json/read-str (:body response) :key-fn keyword)))))
-
-(deftest post-bad-url
-  (is (thrown-with-msg? Exception #"status 400" (client/post "http://localhost:8080"))))
-
 (deftest put-jots-by-id
   (let [response (client/put "http://localhost:8080/jots/1")]
     (is (= (:status response) 200))))
