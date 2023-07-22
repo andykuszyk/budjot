@@ -13,10 +13,18 @@
 (defn get-jot [id]
   (m/fetch-one :budjot :where {:_id (new org.bson.types.ObjectId id)}))
 
+(defn get-all-jots []
+  (m/fetch :budjot :limit 100))
+
+(defn return-post-conflict []
+  (println "jot already exists, returning 409")
+  {:status 409})
+
 (defn handle-post-jots [request]
+  (println "handling POST /jots")
   (let [jot (m/fetch-one :budjot :where {:name (:name (:body request))})]
     (if (not= nil jot)
-      {:status 409}
+      (return-post-conflict)
       {:status 201 :body (json/write-str (insert-jot (:body request)))})))
 
 (defn handle-post-users [request]
@@ -35,19 +43,47 @@
       nil
       (get matches 1))))
 
+(defn is-list-request? [uri]
+  (not= nil (re-find #"/jots[/]*$" uri)))
+
+(defn handle-get-all-jots []
+  (println "handling GET /jots with no id (list)")
+  {:status 200 :body (json/write-str (get-all-jots))})
+
+(defn could-not-find-jot []
+  (println "could not find jot, returning 404")
+  {:status 404})
+
+(defn could-not-determine-jot-id []
+  (println "jot ID could not be determined, returning 400")
+  {:status 400})
+
+(defn return-found-jot [found-jot]
+  (println "found jot, returning 200")
+  {:status 200 :body (json/write-str found-jot)})
+
 (defn handle-get-jots [request]
-  (let [jot-id (get-jot-id (:uri request))]
-    (if (= nil jot-id)
-      {:status 400}
-      (let [found-jot (get-jot jot-id)]
-        (if (= nil found-jot)
-          {:status 404}
-          {:status 200 :body (json/write-str found-jot)})))))
+  (println "handling GET /jots")
+  (if (is-list-request? (:uri request))
+    (handle-get-all-jots)
+    (let [jot-id (get-jot-id (:uri request))]
+      (println "handling GET /jots for specific ID")
+      (if (= nil jot-id)
+        (could-not-determine-jot-id)
+        (let [found-jot (get-jot jot-id)]
+          (if (= nil found-jot)
+            (could-not-find-jot)
+            (return-found-jot found-jot)))))))
+
+(defn return-bad-get-uri []
+  (println "uri did not start with /jots, returning 400")
+  {:status 400})
 
 (defn handle-get [request]
+  (println "handling get request")
   (if (starts-with? (:uri request) "/jots")
     (handle-get-jots request)
-    {:status 400}))
+    (return-bad-get-uri)))
 
 (defn handle-put [request]
   {:status 200 :body (json/write-str {:message "you'll have to put up with this"})})
@@ -56,6 +92,7 @@
   {:status 204})
 
 (defn handler [request]
+  (println "routing http request based on verb")
   (case (:request-method request)
     :get (handle-get request)
     :post (handle-post request)
