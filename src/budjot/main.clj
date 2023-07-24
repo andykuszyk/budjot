@@ -3,6 +3,7 @@
             [ring.middleware.json :refer [wrap-json-body]]
             [somnium.congomongo :as m]
             [clojure.string :refer [starts-with?]]
+            [taoensso.timbre :as log]
             [clojure.data.json :as json])
   (:gen-class))
 
@@ -17,11 +18,11 @@
   (m/fetch :budjot :limit 100))
 
 (defn return-post-conflict []
-  (println "jot already exists, returning 409")
+  (log/info "jot already exists, returning 409")
   {:status 409})
 
 (defn handle-post-jots [request]
-  (println "handling POST /jots")
+  (log/info "handling POST /jots")
   (let [jot (m/fetch-one :budjot :where {:name (:name (:body request))})]
     (if (not= nil jot)
       (return-post-conflict)
@@ -47,27 +48,27 @@
   (not= nil (re-find #"/jots[/]*$" uri)))
 
 (defn handle-get-all-jots []
-  (println "handling GET /jots with no id (list)")
+  (log/info "handling GET /jots with no id (list)")
   {:status 200 :body (json/write-str (get-all-jots))})
 
 (defn could-not-find-jot []
-  (println "could not find jot, returning 404")
+  (log/info "could not find jot, returning 404")
   {:status 404})
 
 (defn could-not-determine-jot-id []
-  (println "jot ID could not be determined, returning 400")
+  (log/info "jot ID could not be determined, returning 400")
   {:status 400})
 
 (defn return-found-jot [found-jot]
-  (println "found jot, returning 200")
+  (log/info "found jot, returning 200")
   {:status 200 :body (json/write-str found-jot)})
 
 (defn handle-get-jots [request]
-  (println "handling GET /jots")
+  (log/info "handling GET /jots")
   (if (is-list-request? (:uri request))
     (handle-get-all-jots)
     (let [jot-id (get-jot-id (:uri request))]
-      (println "handling GET /jots for specific ID")
+      (log/info "handling GET /jots for specific ID")
       (if (= nil jot-id)
         (could-not-determine-jot-id)
         (let [found-jot (get-jot jot-id)]
@@ -76,11 +77,11 @@
             (return-found-jot found-jot)))))))
 
 (defn return-bad-get-uri []
-  (println "uri did not start with /jots, returning 400")
+  (log/info "uri did not start with /jots, returning 400")
   {:status 400})
 
 (defn handle-get [request]
-  (println "handling get request")
+  (log/info "handling get request")
   (if (starts-with? (:uri request) "/jots")
     (handle-get-jots request)
     (return-bad-get-uri)))
@@ -92,7 +93,7 @@
   {:status 204})
 
 (defn handler [request]
-  (println "routing http request based on verb")
+  (log/info "routing http request based on verb")
   (case (:request-method request)
     :get (handle-get request)
     :post (handle-post request)
@@ -106,5 +107,5 @@
 (defn -main
   "Budjot entrypoint"
   [& args]
-  (.println System/out "budjot is starting a web server on port 8080")
+  (log/info "budjot is starting a web server on port 8080")
   (start-budjot true 8080 "mongodb://localhost:27017/budjot"))
