@@ -94,8 +94,15 @@
   (m/set-connection! (m/make-connection mongo-address))
   (run-jetty (wrap-json-body handler {:keywords? true}) {:join? join? :port port}))
 
+(defn get-mongo-address []
+  (let [addr (System/getenv "BUDJOT_MONGO_ADDR")]
+    (if (= (count addr) 0)
+      "mongodb://localhost:27017/budjot"
+      addr)))
 (defn -main
   "Budjot entrypoint"
   [& args]
   (log/info "budjot is starting a web server on port 8080")
-  (start-budjot true 8080 "mongodb://localhost:27017/budjot"))
+  (let [mongo-address (get-mongo-address)]
+    (log/info (format "mongo address is %s" mongo-address))
+    (start-budjot true 8080 mongo-address)))
