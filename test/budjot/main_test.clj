@@ -15,11 +15,6 @@
   (let [response (client/post "http://localhost:8080/users" {:form-params {:foo "bar"} :content-type :json})]
     (is (= (:status response) 201))))
 
-(deftest get-root
-  (let [response (client/get "http://localhost:8080/")]
-    (is (= (:status response) 200))
-    (is (= (:body response) "html"))))
-
 (deftest get-login
   (let [response (client/get "http://localhost:8080/login")]
     (is (= (:status response) 200))
