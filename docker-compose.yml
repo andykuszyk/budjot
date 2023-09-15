@@ -2,8 +2,8 @@ version: "3"
 services:
   budjot:
     image: andykuszyk/budjot:local
-    env:
-      - BUDJOT_MONGO_ADDR: "mongodb://mongo:27017/budjot"
+    environment:
+      - BUDJOT_MONGO_ADDR=mongodb://mongo:27017/budjot
     ports: 
       - "8080:8080"
   mongo:

@@ -99,6 +99,7 @@
     (if (= (count addr) 0)
       "mongodb://localhost:27017/budjot"
       addr)))
+
 (defn -main
   "Budjot entrypoint"
   [& args]
