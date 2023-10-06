@@ -5,6 +5,7 @@
             [clojure.string :as string]
             [taoensso.timbre :as log]
             [ring.middleware.resource :as resource]
+            [ring.middleware.content-type :as content-type]
             [budjot.jots :as jots]
             [budjot.users :as users])
   (:gen-class))
@@ -25,7 +26,11 @@
 (defn start-budjot [join? port mongo-address]
   (def mongo-connection (mongo/make-connection mongo-address))
   (mongo/set-connection! mongo-connection)
-  (jetty/run-jetty (resource/wrap-resource (ring-json/wrap-json-body handler {:keywords? true}) "") {:join? join? :port port}))
+  (jetty/run-jetty
+   (content-type/wrap-content-type
+    (resource/wrap-resource
+     (ring-json/wrap-json-body handler {:keywords? true}) ""))
+   {:join? join? :port port}))
 
 (defn stop-budjot []
   (mongo/close-connection mongo-connection))
