@@ -23,8 +23,12 @@
     :delete {:status 405 :body "not implemented yet"}))
 
 (defn start-budjot [join? port mongo-address]
-  (mongo/set-connection! (mongo/make-connection mongo-address))
+  (def mongo-connection (mongo/make-connection mongo-address))
+  (mongo/set-connection! mongo-connection)
   (jetty/run-jetty (ring-json/wrap-json-body handler {:keywords? true}) {:join? join? :port port}))
+
+(defn stop-budjot []
+  (mongo/close-connection mongo-connection))
 
 (defn- get-mongo-address []
   (let [addr (System/getenv "BUDJOT_MONGO_ADDR")]

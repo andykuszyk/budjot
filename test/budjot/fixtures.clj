@@ -1,6 +1,6 @@
 (ns budjot.fixtures
   (:require [clojure.java.shell :as shell]
-            [budjot.main :refer [start-budjot]]))
+            [budjot.main :as budjot]))
 
 (defn budjot-url []
   "http://localhost:8080/jots")
@@ -17,9 +17,10 @@
 (defn integration-test-fixture [f]
   (stop-mongo)
   (let [mongo-address (start-mongo)
-        server (start-budjot false 8080 mongo-address)] 
+        server (budjot/start-budjot false 8080 mongo-address)] 
     (f)
     (.stop server)
+    (budjot/stop-budjot)
     (stop-mongo)))
 
 (defn jot [name]
