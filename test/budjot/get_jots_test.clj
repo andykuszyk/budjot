@@ -1,6 +1,7 @@
 (ns budjot.get-jots-test
   (:require [clojure.test :refer :all]
             [budjot.fixtures :refer :all]
+            [budjot.jots :as jots]
             [clojure.data.json :as json]
             [clj-http.client :as client]))
 
@@ -34,3 +35,10 @@
 
 (deftest get-jot-malformed-uri-returns-400
   (is (thrown-with-msg? Exception #"status 400" (client/get "http://localhost:8080/jot/abc123abc123abc123abc123"))))
+
+(deftest get-jot-id-well-formed-uri
+  (is (= "abc123" (jots/get-jot-id "/jots/abc123"))))
+
+(deftest get-jot-id-malformed-uri
+  (is (= nil (jots/get-jot-id "/jotsabc123")))
+  (is (= nil (jots/get-jot-id "/jot/abc123"))))

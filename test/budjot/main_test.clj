@@ -1,7 +1,6 @@
 (ns budjot.main-test
   (:require [clojure.test :refer :all]
-            [clj-http.client :as client]
-            [budjot.main :refer [get-jot-id]]))
+            [clj-http.client :as client]))
 
 (deftest delete-jots-by-id
   (let [response (client/delete "http://localhost:8080/jots/1")]
@@ -29,10 +28,3 @@
   (let [response (client/get "http://localhost:8080/list")]
     (is (= (:status response) 200))
     (is (= (:body response) "html"))))
-
-(deftest get-jot-id-well-formed-uri
-  (is (= "abc123" (get-jot-id "/jots/abc123"))))
-
-(deftest get-jot-id-malformed-uri
-  (is (= nil (get-jot-id "/jotsabc123")))
-  (is (= nil (get-jot-id "/jot/abc123"))))

@@ -6,8 +6,7 @@
             [taoensso.timbre :as log]
             [ring.middleware.resource :as resource]
             [budjot.jots :as jots]
-            [budjot.users :as users]
-            [budjot.static :as static])
+            [budjot.users :as users])
   (:gen-class))
 
 (defn handler [request]

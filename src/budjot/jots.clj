@@ -14,7 +14,7 @@
         (log/info "jot found, returning 201")
         {:status 201 :body (json/write-str (storage/insert-jot (:body request)))}))))
 
-(defn- get-jot-id [uri]
+(defn get-jot-id [uri]
   (let [matches (re-matches #"/jots/(.*)" uri)]
     (if (not= 2 (count matches))
       nil
