@@ -4,6 +4,7 @@
             [somnium.congomongo :as mongo]
             [clojure.string :as string]
             [taoensso.timbre :as log]
+            [ring.middleware.resource :as resource]
             [budjot.jots :as jots]
             [budjot.users :as users]
             [budjot.static :as static])
@@ -14,7 +15,7 @@
     :get (do
            (if (string/starts-with? (:uri request) "/jots")
              (jots/handle-get )
-             (static/handle-get request)))
+             {:status 404}))
     :post (case (:uri request)
             "/jots" (jots/handle-post request)
             "/users" (users/handle-post request)
@@ -25,7 +26,7 @@
 (defn start-budjot [join? port mongo-address]
   (def mongo-connection (mongo/make-connection mongo-address))
   (mongo/set-connection! mongo-connection)
-  (jetty/run-jetty (ring-json/wrap-json-body handler {:keywords? true}) {:join? join? :port port}))
+  (jetty/run-jetty (resource/wrap-resource (ring-json/wrap-json-body handler {:keywords? true}) "") {:join? join? :port port}))
 
 (defn stop-budjot []
   (mongo/close-connection mongo-connection))
