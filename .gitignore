@@ -39,3 +39,11 @@ testem.log
 Thumbs.db
 *.swp
 .vscode
+target/
+.clj-kondo/
+.lein-failures
+.lsp
+.lsp/
+.lsp
+.lein-failures/
+.nrepl-port
