@@ -19,11 +19,20 @@ lein test
 #### Running locally
 The entire application can be run locally using `docker-compose` by running:
 
-```sh
+```console
 make docker-up
 ```
 
-> 💡 At the moment, this simply runs the API on port 8080, which only serves a sample HTML file, and some basic endpoints for the "jot" resource.
+Then, you can visit the site at <http://localhost:8080/index.html>.
+
+You can also run the application from a Cider REPL as follows:
+
+```clojure
+(ns budjot.fixtures)
+(start-mongo)
+(ns budjot.main)
+(start-budjot false 8080 "mongodb://localhost:27017/budjot")
+```
 
 ### Frontend
 The frontend is an Angular project written in Typescript.
