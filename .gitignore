@@ -47,3 +47,5 @@ target/
 .lsp
 .lein-failures/
 .nrepl-port
+.angular/
+resources/
