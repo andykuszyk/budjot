@@ -29,7 +29,7 @@
   (jetty/run-jetty
    (content-type/wrap-content-type
     (resource/wrap-resource
-     (ring-json/wrap-json-body handler {:keywords? true}) ""))
+     (ring-json/wrap-json-body handler {:keywords? true}) "budjot"))
    {:join? join? :port port}))
 
 (defn stop-budjot []

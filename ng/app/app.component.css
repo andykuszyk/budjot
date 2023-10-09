@@ -1,0 +1,15 @@
+.title {
+    color: white;
+    font-family: monospace;
+    font-size: x-large;
+    text-align: left;
+}
+.bud {
+    font-weight: bold
+}
+.jot {
+    font-style: italic;
+}
+.header {
+    background-color: navy;
+}
