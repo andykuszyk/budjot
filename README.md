@@ -28,10 +28,9 @@ Then, you can visit the site at <http://localhost:8080/index.html>.
 You can also run the application from a Cider REPL as follows:
 
 ```clojure
-(ns budjot.fixtures)
-(start-mongo)
 (ns budjot.main)
-(start-budjot false 8080 "mongodb://localhost:27017/budjot")
+(require '[budjot.fixtures :as fixtures])
+(start-budjot false 8080 (fixtures/start-mongo))
 ```
 
 ### Frontend
@@ -54,9 +53,12 @@ ng build --prod
 ## TODOs
 The following main items need to be completed to make this project operational on this branch:
 
+- [ ] Edit page doesn't work due to undefined budjot id.
+- [ ] Redirect `/` to `/index.html`.
 - [ ] Implement missing HTTP verbs for the "jot" resource (i.e. `PUT` and `DELETE`).
 - [ ] Implement the "users" resource.
 - [ ] Implement the login route, and add Google OAuth authentication.
+- [ ] Handle sigterm gracefully.
 
 ## Releases
 TBC

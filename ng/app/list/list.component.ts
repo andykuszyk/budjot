@@ -108,6 +108,7 @@ export class ListComponent extends AuthBase {
     }
 
     openBudjot(budjot: any) {
+	console.log('budjot id: ' + budjot.id);
         this.router.navigate(['edit', budjot.id ]);
     }
 }
