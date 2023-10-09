@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AuthBase } from './authbase';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService } from '@abacritt/angularx-social-login';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ import { AuthService } from '@abacritt/angularx-social-login';
 export class AppComponent extends AuthBase {
     title = 'Budjot - A simple budget builder!';
 
-    constructor(http: HttpClient, authService: AuthService) {
+    constructor(http: HttpClient, authService: SocialAuthService) {
         super(http, authService);
     }
 }

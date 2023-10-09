@@ -1,4 +1,4 @@
-import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
+import { SocialAuthService, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 
@@ -8,7 +8,7 @@ export abstract class AuthBase implements OnInit {
     name: string;
     idToken: string;
 
-    constructor(protected http: HttpClient, private authService: AuthService) {}
+    constructor(protected http: HttpClient, private authService: SocialAuthService) {}
     
     signInWithGoogle(): void {
         this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);

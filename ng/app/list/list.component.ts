@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthBase } from '../authbase';
-import { AuthService } from 'angularx-social-login';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Budjot } from '../budjot';
@@ -19,7 +19,7 @@ export class ListComponent extends AuthBase {
     budjots: any;
     copyBudjotName: string;
 
-    constructor(http: HttpClient, authService: AuthService, private router: Router) {
+    constructor(http: HttpClient, authService: SocialAuthService, private router: Router) {
         super(http, authService);
     }
 
@@ -33,8 +33,8 @@ export class ListComponent extends AuthBase {
         }
         
         var url  = window.location.protocol + '//' + window.location.host + '/jots/' + budjot.id;
-        this.http.get(url, { headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': this.idToken}), observe: 'response' }).subscribe(res => {
-            var budjotResponse = new Budjot(this.copyBudjotName, res.body['income']);
+        this.http.get<any>(url, { headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': this.idToken}), observe: 'response' }).subscribe(res => {
+            var budjotResponse = new Budjot(this.copyBudjotName, res.body['income'] as number);
             for(let entry of res.body['entries']) {
                 budjotResponse.addEntry(new BudjotEntry(entry['name'], entry['amount'], entry['paid'], () => budjotResponse.updateFields()));
             }
@@ -47,7 +47,7 @@ export class ListComponent extends AuthBase {
 
     }
     
-    onSignedIn() {
+    override onSignedIn() {
         if(!this.isLoggedIn) return;
         this.getBudjots();
     }
