@@ -14,7 +14,7 @@
   (case (:request-method request)
     :get (do
            (if (string/starts-with? (:uri request) "/jots")
-             (jots/handle-get )
+             (jots/handle-get request)
              {:status 404}))
     :post (case (:uri request)
             "/jots" (jots/handle-post request)

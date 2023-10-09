@@ -33,8 +33,8 @@
 (deftest get-jot-malformed-id-returns-400
   (is (thrown-with-msg? Exception #"status 400" (client/get "http://localhost:8080/jotsabc123abc123abc123abc123"))))
 
-(deftest get-jot-malformed-uri-returns-400
-  (is (thrown-with-msg? Exception #"status 400" (client/get "http://localhost:8080/jot/abc123abc123abc123abc123"))))
+(deftest get-jot-malformed-uri-returns-404
+  (is (thrown-with-msg? Exception #"status 404" (client/get "http://localhost:8080/jot/abc123abc123abc123abc123"))))
 
 (deftest get-jot-id-well-formed-uri
   (is (= "abc123" (jots/get-jot-id "/jots/abc123"))))
