@@ -9,10 +9,3 @@ docker-build:
 
 docker-run: docker-build
 	docker-compose up -d
-
-install-ng:
-	npm install -g @angular/cli
-
-build-ui:
-	npm install --force
-	ng build --prod

@@ -26,21 +26,25 @@ make docker-up
 > 💡 At the moment, this simply runs the API on port 8080, which only serves a sample HTML file, and some basic endpoints for the "jot" resource.
 
 ### Frontend
-The frontend is an Angular project written in Typescript. It is several years old, and does not currently build from scratch.
+The frontend is an Angular project written in Typescript.
+
+Before trying to build the front-end, you will need the Angular command line, and to install the project dependencies:
+
+```console
+npm install -g @angular/cli
+npm install
+```
 
 #### Building
 The frontend can be built with:
 
-```sh
-make build-ui
+```console
+ng build --prod
 ```
-
-> 💡 As noted above, the frontend does not currently build with these instructions due to it being several years out of date.
 
 ## TODOs
 The following main items need to be completed to make this project operational on this branch:
 
-- [ ] Build the frontend Angular project into static HTML and Javascript files in the `resources/` directory.
 - [ ] Implement missing HTTP verbs for the "jot" resource (i.e. `PUT` and `DELETE`).
 - [ ] Implement the "users" resource.
 - [ ] Implement the login route, and add Google OAuth authentication.
