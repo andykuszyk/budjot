@@ -1,18 +1,35 @@
 (ns budjot.jots
   (:require [budjot.storage :as storage]
             [clojure.data.json :as json]
+            [clojure.spec.alpha :as s]
             [taoensso.timbre :as log]))
+
+(s/def :jots/budjot (s/keys :req-un [
+                                  ::name
+                                  ::income
+                                  ::entries
+                                  ]
+                            :opt-un [
+                                  ::userid
+                                  ::modifiedOn
+                                  ::createdOn
+                                  ::id
+                                  ]))
 
 (defn handle-post [request]
   (log/info "handling POST /jots")
-  (let [jot (storage/get-jot-by-name (:name (:body request)))]
-    (if (not= nil jot)
-      (do
-        (log/info "jot already exists, returning 409")
-        {:status 409})
-      (do
-        (log/info "jot found, returning 201")
-        {:status 201 :body (json/write-str (storage/insert-jot (:body request)))}))))
+  (if (s/valid? :jots/budjot (:body request))
+    (let [jot (storage/get-jot-by-name (:name (:body request)))]
+      (if (not= nil jot)
+        (do
+          (log/info "jot already exists, returning 409")
+          {:status 409})
+        (do
+          (log/info "jot found, returning 201")
+          {:status 201 :body (json/write-str (storage/insert-jot (:body request)))})))
+    (do
+      (log/info "request body does not confirm to budjot spec, returning 400")
+      {:status 400})))
 
 (defn get-jot-id [uri]
   (let [matches (re-matches #"/jots/(.*)" uri)]
