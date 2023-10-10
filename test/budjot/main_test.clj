@@ -1,5 +1,5 @@
 (ns budjot.main-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest is]]
             [clj-http.client :as client]))
 
 (deftest delete-jots-by-id
