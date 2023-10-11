@@ -22,7 +22,7 @@
   (let [posted-jot (post-jot)
         got-jot (json/read-str
                  (:body
-                  (client/get (format "%1s/%2s" fixtures/budjot-url (:_id posted-jot))))
+                  (client/get (format "%1s/%2s" fixtures/budjot-url (:id posted-jot))))
                  :key-fn keyword)]
     (is (= posted-jot got-jot))))
 

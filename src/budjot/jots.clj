@@ -48,7 +48,7 @@
   (if (list-request? (:uri request))
     (do
       (log/info "handling GET /jots with no id (list)")
-      {:status 200 :body (json/write-str (storage/get-all-jots))})
+      {:status 200 :body (json/write-str (for [j (storage/get-all-jots)] (sanitise-id j)))})
     (let [jot-id (get-jot-id (:uri request))]
       (log/info "handling GET /jots for specific ID")
       (if (= nil jot-id)
@@ -60,6 +60,12 @@
             (do
               (log/info "could not find jot, returning 404")
               {:status 404})
-            (do
-              (log/info "found jot, returning 200")
-              {:status 200 :body (json/write-str found-jot)})))))))
+            (let [sanitised-jot (sanitise-id found-jot)]
+              (if (s/valid? :jots/get-budjot sanitised-jot)
+                (do
+                  (log/info "found jot, returning 200")
+                  {:status 200 :body (json/write-str sanitised-jot)})
+                (do
+                  (log/info {:message "the data returned from the database was invalid, returning 500"
+                             :data sanitised-jot})
+                  {:status 500 :body "the data returned from the database was invalid"})))))))))
