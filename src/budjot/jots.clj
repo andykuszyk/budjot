@@ -25,8 +25,15 @@
           (log/info "jot already exists, returning 409")
           {:status 409})
         (do
-          (log/info "jot found, returning 201")
-          {:status 201 :body (json/write-str (storage/insert-jot (:body request)))})))
+          (log/info "inserting jot")
+          (let [inserted-jot (storage/insert-jot (:body request))]
+            (if (s/valid? :jots/budjot inserted-jot)
+              (do
+                (log/info "jot inserted, returning 201")
+                {:status 201 :body (json/write-str inserted-jot)})
+              (do
+                (log/info "the data returned from the database was invalid, returning 500")
+                {:status 500 :body "the data returned from the database was invalid"}))))))
     (do
       (log/info "request body does not confirm to budjot spec, returning 400")
       {:status 400})))
