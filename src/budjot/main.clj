@@ -19,7 +19,9 @@
             "/jots" (jots/handle-post request)
             "/users" (users/handle-post request)
             {:status 400})
-    :put {:status 405 :body "not implemented yet"}
+    :put (if (string/starts-with? (:uri request) "/jots")
+           (jots/handle-put request)
+           {:status 404})
     :delete (if (string/starts-with? (:uri request) "/jots")
               (jots/handle-delete request)
               {:status 404})))

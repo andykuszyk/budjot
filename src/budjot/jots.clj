@@ -85,3 +85,23 @@
             (log/info "jot id was valid, deleting jot")
             (storage/delete-jot-by-id jot-id)
             {:status 202}))))))
+
+(defn handle-put [request]
+  (let [jot-id (get-jot-id (:uri request))]
+    (if (s/valid? :jots/post-budjot (:body request))
+      (if (= nil jot-id)
+        (do
+          (log/info "jot ID could not be determined, returning 400")
+          {:status 400})
+        (let [jot (storage/get-jot-by-id jot-id)]
+          (if (= nil jot)
+            (do
+              (log/info "jot could not be found to be updated, returning 404")
+              {:status 404})
+            (do
+              (log/info "jot id was valid, updating jot")
+              (storage/update-jot jot-id (:body request))
+              {:status 204}))))
+      (do
+        (log/info "put request was not in a valid format")
+        {:status 400}))))

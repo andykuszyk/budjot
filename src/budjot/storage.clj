@@ -16,3 +16,8 @@
 
 (defn delete-jot-by-id [id]
   (mongo/destroy! :budjot {:_id (new org.bson.types.ObjectId id)}))
+
+(defn update-jot [id jot]
+  (mongo/update! :budjot
+                 {:_id (new org.bson.types.ObjectId id)}
+                 {:$set {:name (:name jot)}}))

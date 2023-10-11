@@ -55,9 +55,12 @@ The following main items need to be completed to make this project operational o
 
 - [ ] Edit page doesn't work due to undefined budjot id.
 - [ ] Redirect `/` to `/index.html`.
-- [ ] Implement missing HTTP verbs for the "jot" resource (i.e. `PUT` and `DELETE`).
+- [ ] Modal pop-ups don't appear when saving jots.
+- [x] Implement missing HTTP verbs for the "jot" resource (i.e. `PUT` and `DELETE`).
 - [ ] Implement the "users" resource.
 - [ ] Implement the login route, and add Google OAuth authentication.
+- [ ] Enforce authorization header on all routes, including userid check.
+- [ ] Add spec validation to entries array.
 - [ ] Handle sigterm gracefully.
 
 ## Releases
