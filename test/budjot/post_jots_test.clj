@@ -18,7 +18,7 @@
       (is (= (:entries expected) (:entries actual)))
       (is (>= (.length (:createdOn actual)) 0))
       (is (>= (.length (:modifiedOn actual)) 0))
-      (is (= 24 (.length (:_id actual)))))))
+      (is (= 24 (.length (:id actual)))))))
 
 (deftest post-bad-payload-returns-400
   (is (thrown-with-msg? Exception #"status 400" (client/post f/budjot-url {:name "test"}))))
