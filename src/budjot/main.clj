@@ -12,16 +12,17 @@
 
 (defn handler [request]
   (case (:request-method request)
-    :get (do
-           (if (string/starts-with? (:uri request) "/jots")
-             (jots/handle-get request)
-             {:status 404}))
+    :get (if (string/starts-with? (:uri request) "/jots")
+           (jots/handle-get request)
+           {:status 404})
     :post (case (:uri request)
             "/jots" (jots/handle-post request)
             "/users" (users/handle-post request)
             {:status 400})
     :put {:status 405 :body "not implemented yet"}
-    :delete {:status 405 :body "not implemented yet"}))
+    :delete (if (string/starts-with? (:uri request) "/jots")
+              (jots/handle-delete request)
+              {:status 404})))
 
 (defn start-budjot [join? port mongo-address]
   (def mongo-connection (mongo/make-connection mongo-address))

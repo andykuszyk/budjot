@@ -1,5 +1,7 @@
 (ns budjot.fixtures
   (:require [clojure.java.shell :as shell]
+            [clojure.data.json :as json]
+            [clj-http.client :as client]
             [budjot.main :as budjot]))
 
 (def local-mongo-url "mongodb://localhost:27017/budjot")
@@ -33,3 +35,14 @@
 
 (defn build-post-request [j]
   {:form-params j :content-type :json})
+
+(defn generate-name []
+  (.toString (java.util.UUID/randomUUID)))
+
+(defn post-jot []
+  (json/read-str
+   (:body
+    (client/post
+     budjot-url
+     (build-post-request (build-jot (generate-name)))))
+   :key-fn keyword))

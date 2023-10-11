@@ -13,3 +13,6 @@
 
 (defn get-jot-by-name [name]
   (mongo/fetch-one :budjot :where {:name name}))
+
+(defn delete-jot-by-id [id]
+  (mongo/destroy! :budjot {:_id (new org.bson.types.ObjectId id)}))

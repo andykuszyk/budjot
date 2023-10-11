@@ -2,10 +2,6 @@
   (:require [clojure.test :refer [deftest is]]
             [clj-http.client :as client]))
 
-(deftest delete-jots-by-id
-  (let [response (client/delete "http://localhost:8080/jots/1")]
-    (is (= (:status response) 202))))
-
 (deftest put-jots-by-id
   (let [response (client/put "http://localhost:8080/jots/1")]
     (is (= (:status response) 200))))
