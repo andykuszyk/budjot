@@ -21,7 +21,7 @@ The API exposes a set of simple resources for interacting with "jots" (the main 
 The entire application can be run locally using `docker-compose` by running:
 
 ```console
-make docker-up
+make docker-run
 ```
 
 Then, you can visit the site at <http://localhost:8080/index.html>.
