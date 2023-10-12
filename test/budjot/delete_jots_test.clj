@@ -13,7 +13,7 @@
     (is (thrown-with-msg? Exception #"status 404" (client/get jot-url)))))
 
 (deftest delete-jots-by-id-not-exists
-    (is (thrown-with-msg? Exception #"status 404" (client/delete "http://localhost:8080/jots/345345347987"))))
+    (is (thrown-with-msg? Exception #"status 404" (client/delete "http://localhost:8080/jots/6482284c0dc0525a1bb98786"))))
 
 (deftest delete-jots-by-id-not-valid
     (is (thrown-with-msg? Exception #"status 400" (client/delete "http://localhost:8080/jots/"))))

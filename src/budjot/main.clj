@@ -35,7 +35,11 @@
               (jots/handle-delete request)
               {:status 404})))
 
+(defn configure-mongo-logging []
+  (.setLevel (java.util.logging.Logger/getLogger "org.mongodb.driver") java.util.logging.Level/SEVERE))
+
 (defn start-budjot [join? port mongo-address]
+  (configure-mongo-logging)
   (def mongo-connection (mongo/make-connection mongo-address))
   (mongo/set-connection! mongo-connection)
   (jetty/run-jetty

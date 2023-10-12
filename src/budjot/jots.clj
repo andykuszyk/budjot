@@ -14,26 +14,31 @@
 (defn handle-post [request]
   (log/info "handling POST /jots")
   (let [user-id (get (:headers request) "authorization")]
-    (if (s/valid? :jots/post-budjot (:body request))
-      (let [jot (storage/get-jot-by-name (:name (:body request)))]
-        (if (not= nil jot)
-          (do
-            (log/info "jot already exists, returning 409")
-            {:status 409})
-          (do
-            (log/info "inserting jot")
-            (let [inserted-jot (sanitise-id (storage/insert-jot (:body request) user-id))]
-              (if (s/valid? :jots/get-budjot inserted-jot)
-                (do
-                  (log/info "jot inserted, returning 201")
-                  {:status 201 :body (json/write-str inserted-jot)})
-                (do
-                  (log/info
-                   {:message "the data returned from the database was invalid, returning 500" :data inserted-jot})
-                  {:status 500 :body "the data returned from the database was invalid"}))))))
+    (if (= 0 (count user-id))
       (do
-        (log/info "request body does not confirm to budjot spec, returning 400")
-        {:status 400}))))
+        (log/info "authorization header was missing, returning 401")
+        {:status 401})
+
+      (if (s/valid? :jots/post-budjot (:body request))
+        (let [jot (storage/get-jot-by-name (:name (:body request)))]
+          (if (not= nil jot)
+            (do
+              (log/info "jot already exists, returning 409")
+              {:status 409})
+            (do
+              (log/info "inserting jot")
+              (let [inserted-jot (sanitise-id (storage/insert-jot (:body request) user-id))]
+                (if (s/valid? :jots/get-budjot inserted-jot)
+                  (do
+                    (log/info "jot inserted, returning 201")
+                    {:status 201 :body (json/write-str inserted-jot)})
+                  (do
+                    (log/info
+                     {:message "the data returned from the database was invalid, returning 500" :data inserted-jot})
+                    {:status 500 :body "the data returned from the database was invalid"}))))))
+        (do
+          (log/info "request body does not confirm to budjot spec, returning 400")
+          {:status 400})))))
 
 (defn get-jot-id [uri]
   (let [matches (re-matches #"/jots/(.*)" uri)]
@@ -73,11 +78,12 @@
 
 (defn handle-delete [request]
   (let [jot-id (get-jot-id (:uri request))]
-    (if (= nil jot-id)
+    (log/info (format "jot id: %1s" jot-id))
+    (if (or (= nil jot-id) (= 0 (count jot-id)))
       (do
         (log/info "jot ID could not be determined, returning 400")
         {:status 400})
-            (let [jot (storage/get-jot-by-id jot-id)]
+      (let [jot (storage/get-jot-by-id jot-id)]
         (if (= nil jot)
           (do
             (log/info "jot could not be found to delete, returning 404")

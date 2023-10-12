@@ -19,7 +19,11 @@
       (is (= 24 (.length (:id actual)))))))
 
 (deftest post-bad-payload-returns-400
-  (is (thrown-with-msg? Exception #"status 400" (client/post f/budjot-url {:name "test"}))))
+  (is (thrown-with-msg? Exception #"status 400" (client/post
+                                                 f/budjot-url
+                                                 {:form-params {:name "test"}
+                                                  :content-type :json
+                                                  :headers {"Authorization" (f/generate-user-id)}}))))
 
 (deftest post-without-auth-header-returns-401
   (is (thrown-with-msg? Exception #"status 401" (client/post f/budjot-url {:name "test"}))))
