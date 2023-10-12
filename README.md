@@ -26,6 +26,8 @@ make docker-run
 
 Then, you can visit the site at <http://localhost:8080/index.html>.
 
+> 💡 Authentication isn't currently implemented in the API, so if you run the frontend locally you won't be able to use the application, unless you're already signed in with a Google account.
+
 You can also run the application from a Cider REPL as follows:
 
 ```clojure
