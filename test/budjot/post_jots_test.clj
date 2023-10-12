@@ -10,8 +10,7 @@
   (let [response (client/post f/budjot-url (f/build-post-request (f/build-jot "new jot")))]
     (is (= 201 (:status response)))
     (let [actual (json/read-str (:body response) :key-fn keyword)
-          expected (f/build-jot "new jot"
-                    )]
+          expected (f/build-jot "new jot")]
       (is (= (:name expected) (:name actual)))
       (is (= (:income expected) (:income actual)))
       (is (= (:userid expected) (:userid actual)))

@@ -21,3 +21,10 @@
   (mongo/update! :budjot
                  {:_id (new org.bson.types.ObjectId id)}
                  {:$set {:name (:name jot)}}))
+
+(defn insert-user [id]
+  (let [now (new java.util.Date)]
+    (mongo/insert! :user {:id id :created now :lastLogin now})))
+
+(defn get-user-by-id [id]
+  (mongo/fetch-one :user :where {:id id}))
