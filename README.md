@@ -59,7 +59,7 @@ ng build --prod
 ## TODOs
 The following main items need to be completed to make this project operational on this branch:
 
-- [ ] Edit page doesn't work due to undefined budjot id.
+- [x] Edit page doesn't work due to undefined budjot id.
 - [x] Redirect `/` to `/index.html`.
 - [ ] Modal pop-ups don't appear when saving jots.
 - [x] Implement missing HTTP verbs for the "jot" resource (i.e. `PUT` and `DELETE`).

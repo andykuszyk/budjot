@@ -33,8 +33,14 @@
    :entries [{:name "shopping" :amount "25":paid false}
              {:name "fuel" :amount "70" :paid true}]})
 
-(defn build-post-request [j]
-  {:form-params j :content-type :json})
+(defn generate-user-id []
+  (.toString (java.util.UUID/randomUUID)))
+
+(defn build-post-jot-request
+  ([jot]
+   (build-post-jot-request jot (generate-user-id)))
+  ([jot user-id]
+   {:form-params jot :content-type :json :headers {"Authorization" user-id}}))
 
 (defn generate-name []
   (.toString (java.util.UUID/randomUUID)))
@@ -44,5 +50,5 @@
    (:body
     (client/post
      budjot-url
-     (build-post-request (build-jot (generate-name)))))
+     (build-post-jot-request (build-jot (generate-name)))))
    :key-fn keyword))

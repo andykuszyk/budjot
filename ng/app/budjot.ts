@@ -20,11 +20,19 @@ export class Budjot {
     }
 
     toJson() {
+	var entriesJson = [];
+	for(const entry of this.entries) {
+	    entriesJson.push({
+		name: entry.name,
+		amount: entry.amount,
+		paid: entry.paid,
+	    });
+	}
         return {
             income: this.income,
             name: this.name,
             id: this.id,
-            entries: this.entries,
+            entries: entriesJson,
         }
     }
 

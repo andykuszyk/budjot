@@ -1,9 +1,9 @@
 (ns budjot.storage
   (:require [somnium.congomongo :as mongo]))
 
-(defn insert-jot [jot]
+(defn insert-jot [jot user-id]
   (let [now (new java.util.Date)]
-    (mongo/insert! :budjot (merge jot {:createdOn now :modifiedOn now}))))
+    (mongo/insert! :budjot (merge jot {:userId user-id :createdOn now :modifiedOn now}))))
 
 (defn get-jot-by-id [id]
   (mongo/fetch-one :budjot :where {:_id (new org.bson.types.ObjectId id)}))
