@@ -10,11 +10,20 @@
             [budjot.users :as users])
   (:gen-class))
 
+(defn serve-index-page? [uri]
+  (= "/" uri))
+
+(defn serve-index-page []
+  (log/info "serving index page")
+  {:body (slurp "resources/budjot/index.html") :headers {"Content-Type" "text/html"}})
+
 (defn handler [request]
   (case (:request-method request)
     :get (if (string/starts-with? (:uri request) "/jots")
            (jots/handle-get request)
-           {:status 404})
+           (if (serve-index-page? (:uri request))
+             (serve-index-page)
+             {:status 404}))
     :post (case (:uri request)
             "/jots" (jots/handle-post request)
             "/users" (users/handle-post request)

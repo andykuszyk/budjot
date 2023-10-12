@@ -30,7 +30,13 @@ You can also run the application from a Cider REPL as follows:
 ```clojure
 (ns budjot.main)
 (require '[budjot.fixtures :as fixtures])
-(start-budjot false 8080 (fixtures/start-mongo))
+(def server (start-budjot false 8080 (fixtures/start-mongo)))
+```
+
+The web server can then be stopped on demand with:
+
+```clojure
+(.stop server)
 ```
 
 ### Frontend
@@ -54,10 +60,10 @@ ng build --prod
 The following main items need to be completed to make this project operational on this branch:
 
 - [ ] Edit page doesn't work due to undefined budjot id.
-- [ ] Redirect `/` to `/index.html`.
+- [x] Redirect `/` to `/index.html`.
 - [ ] Modal pop-ups don't appear when saving jots.
 - [x] Implement missing HTTP verbs for the "jot" resource (i.e. `PUT` and `DELETE`).
-- [ ] Implement the "users" resource.
+- [x] Implement the "users" resource.
 - [ ] Implement the login route, and add Google OAuth authentication.
 - [ ] Enforce authorization header on all routes, including userid check.
 - [ ] Add spec validation to entries array.
